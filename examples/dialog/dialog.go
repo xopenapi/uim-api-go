@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 )
 
 var api = uim.New("YOUR_TOKEN")

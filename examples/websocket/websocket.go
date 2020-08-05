@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 )
 
 func main() {

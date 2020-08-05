@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/uim-go/uim"
-	"github.com/uim-go/uim/uimevents"
+	"github.com/xopenapi/uim-api-go"
+	"github.com/xopenapi/uim-api-go/uimevents"
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"

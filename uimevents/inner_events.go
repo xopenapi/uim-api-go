@@ -5,7 +5,7 @@ package uimevents
 import (
 	"encoding/json"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 )
 
 // EventsAPIInnerEvent the inner event of a EventsAPI event_callback Event.

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 )
 
 func TestParserOuterCallBackEvent(t *testing.T) {

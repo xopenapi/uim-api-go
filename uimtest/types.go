@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"sync"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 )
 
 type contextKey string

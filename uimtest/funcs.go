@@ -7,7 +7,7 @@ import (
 	"time"
 
 	websocket "github.com/gorilla/websocket"
-	uim "github.com/uim-go/uim"
+	uim "github.com/xopenapi/uim-api-go"
 )
 
 func (sts *Server) queueForWebsocket(s, hubname string) {

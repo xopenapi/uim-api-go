@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/uim-go/uim"
+	"github.com/xopenapi/uim-api-go"
 	"github.com/stretchr/testify/assert"
 )
 

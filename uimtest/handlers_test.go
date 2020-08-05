@@ -3,7 +3,7 @@ package uimtest
 import (
 	"testing"
 
-	uim "github.com/uim-go/uim"
+	uim "github.com/xopenapi/uim-api-go"
 	"github.com/stretchr/testify/assert"
 )
 
