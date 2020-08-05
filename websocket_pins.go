@@ -1,4 +1,4 @@
-package slack
+package uim
 
 type pinEvent struct {
 	Type           string `json:"type"`

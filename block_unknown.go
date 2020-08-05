@@ -1,6 +1,6 @@
-package slack
+package uim
 
-// UnknownBlock represents a block type that is not yet known. This block type exists to prevent Slack from introducing
+// UnknownBlock represents a block type that is not yet known. This block type exists to prevent UIM from introducing
 // new and unknown block types that break this library.
 type UnknownBlock struct {
 	Type    MessageBlockType `json:"type"`

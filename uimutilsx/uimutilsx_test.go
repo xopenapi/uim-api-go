@@ -1,4 +1,4 @@
-package slackutilsx
+package uimutilsx
 
 import (
 	"testing"

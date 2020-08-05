@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 )
 
 func (api *Client) adminRequest(ctx context.Context, method string, teamName string, values url.Values) error {
-	resp := &SlackResponse{}
+	resp := &UimResponse{}
 	err := parseAdminResponse(ctx, api.httpclient, method, teamName, values, resp, api)
 	if err != nil {
 		return err
@@ -38,12 +38,12 @@ func (api *Client) DisableUserContext(ctx context.Context, teamName string, uid 
 	return nil
 }
 
-// InviteGuest invites a user to Slack as a single-channel guest
+// InviteGuest invites a user to uim as a single-channel guest
 func (api *Client) InviteGuest(teamName, channel, firstName, lastName, emailAddress string) error {
 	return api.InviteGuestContext(context.Background(), teamName, channel, firstName, lastName, emailAddress)
 }
 
-// InviteGuestContext invites a user to Slack as a single-channel guest with a custom context
+// InviteGuestContext invites a user to uim as a single-channel guest with a custom context
 func (api *Client) InviteGuestContext(ctx context.Context, teamName, channel, firstName, lastName, emailAddress string) error {
 	values := url.Values{
 		"email":            {emailAddress},
@@ -65,12 +65,12 @@ func (api *Client) InviteGuestContext(ctx context.Context, teamName, channel, fi
 	return nil
 }
 
-// InviteRestricted invites a user to Slack as a restricted account
+// InviteRestricted invites a user to uim as a restricted account
 func (api *Client) InviteRestricted(teamName, channel, firstName, lastName, emailAddress string) error {
 	return api.InviteRestrictedContext(context.Background(), teamName, channel, firstName, lastName, emailAddress)
 }
 
-// InviteRestrictedContext invites a user to Slack as a restricted account with a custom context
+// InviteRestrictedContext invites a user to uim as a restricted account with a custom context
 func (api *Client) InviteRestrictedContext(ctx context.Context, teamName, channel, firstName, lastName, emailAddress string) error {
 	values := url.Values{
 		"email":      {emailAddress},
@@ -92,12 +92,12 @@ func (api *Client) InviteRestrictedContext(ctx context.Context, teamName, channe
 	return nil
 }
 
-// InviteToTeam invites a user to a Slack team
+// InviteToTeam invites a user to a uim team
 func (api *Client) InviteToTeam(teamName, firstName, lastName, emailAddress string) error {
 	return api.InviteToTeamContext(context.Background(), teamName, firstName, lastName, emailAddress)
 }
 
-// InviteToTeamContext invites a user to a Slack team with a custom context
+// InviteToTeamContext invites a user to a uim team with a custom context
 func (api *Client) InviteToTeamContext(ctx context.Context, teamName, firstName, lastName, emailAddress string) error {
 	values := url.Values{
 		"email":      {emailAddress},

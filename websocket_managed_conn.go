@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/slack-go/slack/internal/errorsx"
-	"github.com/slack-go/slack/internal/timex"
+	"github.com/uim-go/uim/internal/errorsx"
+	"github.com/uim-go/uim/internal/timex"
 )
 
-// ManageConnection can be called on a Slack RTM instance returned by the
-// NewRTM method. It will connect to the slack RTM API and handle all incoming
+// ManageConnection can be called on a UIM RTM instance returned by the
+// NewRTM method. It will connect to the uim RTM API and handle all incoming
 // and outgoing events. If a connection fails then it will attempt to reconnect
 // and will notify any listeners through an error event on the IncomingEvents
 // channel.
@@ -23,7 +23,7 @@ import (
 // If the connection ends and the disconnect was unintentional then this will
 // attempt to reconnect.
 //
-// This should only be called once per slack API! Otherwise expect undefined
+// This should only be called once per uim API! Otherwise expect undefined
 // behavior.
 //
 // The defined error events are located in websocket_internals.go.
@@ -78,7 +78,7 @@ func (rtm *RTM) ManageConnection() {
 	}
 }
 
-// connect attempts to connect to the slack websocket API. It handles any
+// connect attempts to connect to the uim websocket API. It handles any
 // errors that occur while connecting and will return once a connection
 // has been successfully opened.
 // If useRTMStart is false then it uses rtm.connect to create the connection,
@@ -91,7 +91,7 @@ func (rtm *RTM) connect(connectionCount int, useRTMStart bool) (*Info, *websocke
 	)
 
 	// used to provide exponential backoff wait time with jitter before trying
-	// to connect to slack again
+	// to connect to uim again
 	boff := &backoff{
 		Max: 5 * time.Minute,
 	}
@@ -162,9 +162,9 @@ func (rtm *RTM) connect(connectionCount int, useRTMStart bool) (*Info, *websocke
 	}
 }
 
-// startRTMAndDial attempts to connect to the slack websocket. If useRTMStart is true,
+// startRTMAndDial attempts to connect to the uim websocket. If useRTMStart is true,
 // then it returns the  full information returned by the "rtm.start" method on the
-// slack API. Else it uses the "rtm.connect" method to connect
+// uim API. Else it uses the "rtm.connect" method to connect
 func (rtm *RTM) startRTMAndDial(useRTMStart bool) (info *Info, _ *websocket.Conn, err error) {
 	var (
 		url string
@@ -193,7 +193,7 @@ func (rtm *RTM) startRTMAndDial(useRTMStart bool) (info *Info, _ *websocket.Conn
 	rtm.Debugf("Dialing to websocket on url %s", url)
 	// Only use HTTPS for connections to prevent MITM attacks on the connection.
 	upgradeHeader := http.Header{}
-	upgradeHeader.Add("Origin", "https://api.slack.com")
+	upgradeHeader.Add("Origin", "https://api.uim.com")
 	dialer := websocket.DefaultDialer
 	if rtm.dialer != nil {
 		dialer = rtm.dialer
@@ -305,7 +305,7 @@ func (rtm *RTM) sendWithDeadline(msg interface{}) error {
 	return rtm.conn.SetWriteDeadline(time.Time{})
 }
 
-// sendOutgoingMessage sends the given OutgoingMessage to the slack websocket.
+// sendOutgoingMessage sends the given OutgoingMessage to the uim websocket.
 //
 // It does not currently detect if a outgoing message fails due to a disconnect
 // and instead lets a future failed 'PING' detect the failed connection.
@@ -391,7 +391,7 @@ func (rtm *RTM) receiveIncomingEvent(events chan json.RawMessage) error {
 	return nil
 }
 
-// handleRawEvent takes a raw JSON message received from the slack websocket
+// handleRawEvent takes a raw JSON message received from the uim websocket
 // and handles the encoded event.
 // returns the event type of the message.
 func (rtm *RTM) handleRawEvent(rawEvent json.RawMessage) string {

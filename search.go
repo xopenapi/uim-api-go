@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -75,7 +75,7 @@ type searchResponseFull struct {
 	Query          string `json:"query"`
 	SearchMessages `json:"messages"`
 	SearchFiles    `json:"files"`
-	SlackResponse
+	UimResponse
 }
 
 func NewSearchParameters() SearchParameters {

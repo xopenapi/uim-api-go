@@ -1,36 +1,36 @@
-package slacktest
+package uimtest
 
 import (
 	"fmt"
 
-	slack "github.com/slack-go/slack"
+	uim "github.com/uim-go/uim"
 )
 
-const defaultBotName = "TestSlackBot"
+const defaultBotName = "TestUIMBot"
 const defaultBotID = "U023BECGF"
 const defaultTeamID = "T024BE7LD"
 const defaultNonBotUserID = "W012A3CDE"
 const defaultNonBotUserName = "Egon Spengler"
-const defaultTeamName = "SlackTest Team"
+const defaultTeamName = "UimTest Team"
 const defaultTeamDomain = "testdomain"
 
 var defaultCreatedTs = nowAsJSONTime()
 
-var defaultTeam = &slack.Team{
+var defaultTeam = &uim.Team{
 	ID:     defaultTeamID,
 	Name:   defaultTeamName,
 	Domain: defaultTeamDomain,
 }
 
-var defaultBotInfo = &slack.UserDetails{
+var defaultBotInfo = &uim.UserDetails{
 	ID:             defaultBotID,
 	Name:           defaultBotName,
 	Created:        defaultCreatedTs,
 	ManualPresence: "true",
-	Prefs:          slack.UserPrefs{},
+	Prefs:          uim.UserPrefs{},
 }
 
-var okWebResponse = slack.SlackResponse{
+var okWebResponse = uim.UimResponse{
 	Ok: true,
 }
 

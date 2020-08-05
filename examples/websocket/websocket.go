@@ -5,14 +5,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New(
+	api := uim.New(
 		"YOUR TOKEN HERE",
-		slack.OptionDebug(true),
-		slack.OptionLog(log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)),
+		uim.OptionDebug(true),
+		uim.OptionLog(log.New(os.Stdout, "uim-bot: ", log.Lshortfile|log.LstdFlags)),
 	)
 
 	rtm := api.NewRTM()
@@ -21,31 +21,31 @@ func main() {
 	for msg := range rtm.IncomingEvents {
 		fmt.Print("Event Received: ")
 		switch ev := msg.Data.(type) {
-		case *slack.HelloEvent:
+		case *uim.HelloEvent:
 			// Ignore hello
 
-		case *slack.ConnectedEvent:
+		case *uim.ConnectedEvent:
 			fmt.Println("Infos:", ev.Info)
 			fmt.Println("Connection counter:", ev.ConnectionCount)
 			// Replace C2147483705 with your Channel ID
 			rtm.SendMessage(rtm.NewOutgoingMessage("Hello world", "C2147483705"))
 
-		case *slack.MessageEvent:
+		case *uim.MessageEvent:
 			fmt.Printf("Message: %v\n", ev)
 
-		case *slack.PresenceChangeEvent:
+		case *uim.PresenceChangeEvent:
 			fmt.Printf("Presence Change: %v\n", ev)
 
-		case *slack.LatencyReport:
+		case *uim.LatencyReport:
 			fmt.Printf("Current latency: %v\n", ev.Value)
 
-		case *slack.DesktopNotificationEvent:
+		case *uim.DesktopNotificationEvent:
 			fmt.Printf("Desktop Notification: %v\n", ev)
 
-		case *slack.RTMError:
+		case *uim.RTMError:
 			fmt.Printf("Error: %s\n", ev.Error())
 
-		case *slack.InvalidAuthEvent:
+		case *uim.InvalidAuthEvent:
 			fmt.Printf("Invalid credentials")
 			return
 

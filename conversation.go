@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -97,7 +97,7 @@ func (api *Client) GetUsersInConversationContext(ctx context.Context, params *Ge
 	response := struct {
 		Members          []string         `json:"members"`
 		ResponseMetaData responseMetaData `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{}
 
 	err := api.postMethod(ctx, "conversations.members", values, &response)
@@ -140,7 +140,7 @@ func (api *Client) GetConversationsForUserContext(ctx context.Context, params *G
 	response := struct {
 		Channels         []Channel        `json:"channels"`
 		ResponseMetaData responseMetaData `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{}
 	err = api.postMethod(ctx, "users.conversations", values, &response)
 	if err != nil {
@@ -162,7 +162,7 @@ func (api *Client) ArchiveConversationContext(ctx context.Context, channelID str
 		"channel": {channelID},
 	}
 
-	response := SlackResponse{}
+	response := UimResponse{}
 	err := api.postMethod(ctx, "conversations.archive", values, &response)
 	if err != nil {
 		return err
@@ -182,7 +182,7 @@ func (api *Client) UnArchiveConversationContext(ctx context.Context, channelID s
 		"token":   {api.token},
 		"channel": {channelID},
 	}
-	response := SlackResponse{}
+	response := UimResponse{}
 	err := api.postMethod(ctx, "conversations.unarchive", values, &response)
 	if err != nil {
 		return err
@@ -204,7 +204,7 @@ func (api *Client) SetTopicOfConversationContext(ctx context.Context, channelID,
 		"topic":   {topic},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		Channel *Channel `json:"channel"`
 	}{}
 	err := api.postMethod(ctx, "conversations.setTopic", values, &response)
@@ -228,7 +228,7 @@ func (api *Client) SetPurposeOfConversationContext(ctx context.Context, channelI
 		"purpose": {purpose},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		Channel *Channel `json:"channel"`
 	}{}
 
@@ -253,7 +253,7 @@ func (api *Client) RenameConversationContext(ctx context.Context, channelID, cha
 		"name":    {channelName},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		Channel *Channel `json:"channel"`
 	}{}
 
@@ -278,7 +278,7 @@ func (api *Client) InviteUsersToConversationContext(ctx context.Context, channel
 		"users":   {strings.Join(users, ",")},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		Channel *Channel `json:"channel"`
 	}{}
 
@@ -303,7 +303,7 @@ func (api *Client) KickUserFromConversationContext(ctx context.Context, channelI
 		"user":    {user},
 	}
 
-	response := SlackResponse{}
+	response := UimResponse{}
 	err := api.postMethod(ctx, "conversations.kick", values, &response)
 	if err != nil {
 		return err
@@ -324,7 +324,7 @@ func (api *Client) CloseConversationContext(ctx context.Context, channelID strin
 		"channel": {channelID},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		NoOp          bool `json:"no_op"`
 		AlreadyClosed bool `json:"already_closed"`
 	}{}
@@ -437,7 +437,7 @@ func (api *Client) GetConversationRepliesContext(ctx context.Context, params *Ge
 		values.Add("inclusive", "0")
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 		HasMore          bool `json:"has_more"`
 		ResponseMetaData struct {
 			NextCursor string `json:"next_cursor"`
@@ -460,12 +460,12 @@ type GetConversationsParameters struct {
 	Types           []string
 }
 
-// GetConversations returns the list of channels in a Slack team
+// GetConversations returns the list of channels in a UIM team
 func (api *Client) GetConversations(params *GetConversationsParameters) (channels []Channel, nextCursor string, err error) {
 	return api.GetConversationsContext(context.Background(), params)
 }
 
-// GetConversationsContext returns the list of channels in a Slack team with a custom context
+// GetConversationsContext returns the list of channels in a UIM team with a custom context
 func (api *Client) GetConversationsContext(ctx context.Context, params *GetConversationsParameters) (channels []Channel, nextCursor string, err error) {
 	values := url.Values{
 		"token":            {api.token},
@@ -483,7 +483,7 @@ func (api *Client) GetConversationsContext(ctx context.Context, params *GetConve
 	response := struct {
 		Channels         []Channel        `json:"channels"`
 		ResponseMetaData responseMetaData `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{}
 
 	err = api.postMethod(ctx, "conversations.list", values, &response)
@@ -521,7 +521,7 @@ func (api *Client) OpenConversationContext(ctx context.Context, params *OpenConv
 		Channel     *Channel `json:"channel"`
 		NoOp        bool     `json:"no_op"`
 		AlreadyOpen bool     `json:"already_open"`
-		SlackResponse
+		UimResponse
 	}{}
 
 	err := api.postMethod(ctx, "conversations.open", values, &response)
@@ -546,7 +546,7 @@ func (api *Client) JoinConversationContext(ctx context.Context, channelID string
 		ResponseMetaData *struct {
 			Warnings []string `json:"warnings"`
 		} `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{}
 
 	err := api.postMethod(ctx, "conversations.join", values, &response)
@@ -573,7 +573,7 @@ type GetConversationHistoryParameters struct {
 }
 
 type GetConversationHistoryResponse struct {
-	SlackResponse
+	UimResponse
 	HasMore          bool   `json:"has_more"`
 	PinCount         int    `json:"pin_count"`
 	Latest           string `json:"latest"`

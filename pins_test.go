@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"fmt"
@@ -36,7 +36,7 @@ func (rh *pinsHandler) handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(rh.response))
 }
 
-func TestSlack_AddPin(t *testing.T) {
+func TestUIM_AddPin(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -83,7 +83,7 @@ func TestSlack_AddPin(t *testing.T) {
 	}
 }
 
-func TestSlack_RemovePin(t *testing.T) {
+func TestUIM_RemovePin(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -130,7 +130,7 @@ func TestSlack_RemovePin(t *testing.T) {
 	}
 }
 
-func TestSlack_ListPins(t *testing.T) {
+func TestUIM_ListPins(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	rh := newPinsHandler()

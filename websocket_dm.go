@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // IMCreatedEvent represents the IM created event
 type IMCreatedEvent struct {

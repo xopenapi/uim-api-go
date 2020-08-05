@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -76,7 +76,7 @@ func (api *Client) ConnectRTMContext(ctx context.Context) (info *Info, websocket
 type RTMOption func(*RTM)
 
 // RTMOptionUseStart as of 11th July 2017 you should prefer setting this to false, see:
-// https://api.slack.com/changelog/2017-04-start-using-rtm-connect-and-stop-using-rtm-start
+// https://api.uim.com/changelog/2017-04-start-using-rtm-connect-and-stop-using-rtm-start
 func RTMOptionUseStart(b bool) RTMOption {
 	return func(rtm *RTM) {
 		rtm.useRTMStart = b
@@ -91,7 +91,7 @@ func RTMOptionDialer(d *websocket.Dialer) RTMOption {
 	}
 }
 
-// RTMOptionPingInterval determines how often to deliver a ping message to slack.
+// RTMOptionPingInterval determines how often to deliver a ping message to uim.
 func RTMOptionPingInterval(d time.Duration) RTMOption {
 	return func(rtm *RTM) {
 		rtm.pingInterval = d
@@ -107,7 +107,7 @@ func RTMOptionConnParams(connParams url.Values) RTMOption {
 }
 
 // NewRTM returns a RTM, which provides a fully managed connection to
-// Slack's websocket-based Real-Time Messaging protocol.
+// UIM's websocket-based Real-Time Messaging protocol.
 func (api *Client) NewRTM(options ...RTMOption) *RTM {
 	result := &RTM{
 		Client:           *api,

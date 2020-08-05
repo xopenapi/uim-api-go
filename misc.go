@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"bytes"
@@ -20,19 +20,19 @@ import (
 	"time"
 )
 
-// SlackResponse handles parsing out errors from the web api.
-type SlackResponse struct {
+// UimResponse handles parsing out errors from the web api.
+type UimResponse struct {
 	Ok    bool   `json:"ok"`
 	Error string `json:"error"`
 }
 
-func (t SlackResponse) Err() error {
+func (t UimResponse) Err() error {
 	if t.Ok {
 		return nil
 	}
 
 	// handle pure text based responses like chat.post
-	// which while they have a slack response in their data structure
+	// which while they have a uim response in their data structure
 	// it doesn't actually get set during parsing.
 	if strings.TrimSpace(t.Error) == "" {
 		return nil
@@ -49,7 +49,7 @@ type statusCodeError struct {
 }
 
 func (t statusCodeError) Error() string {
-	return fmt.Sprintf("slack server error: %s", t.Status)
+	return fmt.Sprintf("uim server error: %s", t.Status)
 }
 
 func (t statusCodeError) HTTPStatusCode() int {
@@ -63,13 +63,13 @@ func (t statusCodeError) Retryable() bool {
 	return false
 }
 
-// RateLimitedError represents the rate limit respond from slack
+// RateLimitedError represents the rate limit respond from uim
 type RateLimitedError struct {
 	RetryAfter time.Duration
 }
 
 func (e *RateLimitedError) Error() string {
-	return fmt.Sprintf("slack rate limit exceeded, retry after %s", e.RetryAfter)
+	return fmt.Sprintf("uim rate limit exceeded, retry after %s", e.RetryAfter)
 }
 
 func (e *RateLimitedError) Retryable() bool {
@@ -285,7 +285,7 @@ func logResponse(resp *http.Response, d debug) error {
 
 func okJSONHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
-	response, _ := json.Marshal(SlackResponse{
+	response, _ := json.Marshal(UimResponse{
 		Ok: true,
 	})
 	rw.Write(response)
@@ -308,7 +308,7 @@ func checkStatusCode(resp *http.Response, d debug) error {
 		return &RateLimitedError{time.Duration(retry) * time.Second}
 	}
 
-	// Slack seems to send an HTML body along with 5xx error codes. Don't parse it.
+	// UIM seems to send an HTML body along with 5xx error codes. Don't parse it.
 	if resp.StatusCode != http.StatusOK {
 		logResponse(resp, d)
 		return statusCodeError{Code: resp.StatusCode, Status: resp.Status}

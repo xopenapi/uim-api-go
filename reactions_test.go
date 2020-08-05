@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"fmt"
@@ -39,7 +39,7 @@ func (rh *reactionsHandler) handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(rh.response))
 }
 
-func TestSlack_AddReaction(t *testing.T) {
+func TestUIM_AddReaction(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -87,7 +87,7 @@ func TestSlack_AddReaction(t *testing.T) {
 	}
 }
 
-func TestSlack_RemoveReaction(t *testing.T) {
+func TestUIM_RemoveReaction(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -135,7 +135,7 @@ func TestSlack_RemoveReaction(t *testing.T) {
 	}
 }
 
-func TestSlack_GetReactions(t *testing.T) {
+func TestUIM_GetReactions(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -249,7 +249,7 @@ func TestSlack_GetReactions(t *testing.T) {
 	}
 }
 
-func TestSlack_ListReactions(t *testing.T) {
+func TestUIM_ListReactions(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	rh := newReactionsHandler()

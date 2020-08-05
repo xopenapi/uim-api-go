@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
-	params := slack.FileUploadParameters{
+	api := uim.New("YOUR_TOKEN_HERE")
+	params := uim.FileUploadParameters{
 		Title: "Batman Example",
 		//Filetype: "txt",
 		File: "example.txt",

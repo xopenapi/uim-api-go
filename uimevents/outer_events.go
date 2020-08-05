@@ -1,6 +1,6 @@
 // outer_events.go provides EventsAPI particular outer events
 
-package slackevents
+package uimevents
 
 import (
 	"encoding/json"

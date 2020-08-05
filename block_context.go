@@ -1,9 +1,9 @@
-package slack
+package uim
 
 // ContextBlock defines data that is used to display message context, which can
 // include both images and text.
 //
-// More Information: https://api.slack.com/reference/messaging/blocks#actions
+// More Information: https://api.uim.com/reference/messaging/blocks#actions
 type ContextBlock struct {
 	Type            MessageBlockType `json:"type"`
 	BlockID         string           `json:"block_id,omitempty"`

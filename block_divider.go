@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // DividerBlock for displaying a divider line between blocks (similar to <hr> tag in html)
 //
-// More Information: https://api.slack.com/reference/messaging/blocks#divider
+// More Information: https://api.uim.com/reference/messaging/blocks#divider
 type DividerBlock struct {
 	Type    MessageBlockType `json:"type"`
 	BlockID string           `json:"block_id,omitempty"`

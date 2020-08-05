@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // reactionItem is a lighter-weight item than is returned by the reactions list.
 type reactionItem struct {

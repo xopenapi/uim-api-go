@@ -1,4 +1,4 @@
-package slackevents
+package uimevents
 
 import (
 	"crypto/subtle"
@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
-// eventsMap checks both slack.EventsMapping and
-// and slackevents.EventsAPIInnerEventMapping. If the event
+// eventsMap checks both uim.EventsMapping and
+// and uimevents.EventsAPIInnerEventMapping. If the event
 // exists, returns the the unmarshalled struct instance of
 // target for the matching event type.
 // TODO: Consider moving all events into its own package?
@@ -23,7 +23,7 @@ func eventsMap(t string) (interface{}, bool) {
 	if exists {
 		return v, exists
 	}
-	v, exists = slack.EventMapping[t]
+	v, exists = uim.EventMapping[t]
 	if exists {
 		return v, exists
 	}
@@ -39,7 +39,7 @@ func parseOuterEvent(rawE json.RawMessage) (EventsAPIEvent, error) {
 			"",
 			"unmarshalling_error",
 			"",
-			&slack.UnmarshallingErrorEvent{ErrorObj: err},
+			&uim.UnmarshallingErrorEvent{ErrorObj: err},
 			EventsAPIInnerEvent{},
 		}, err
 	}
@@ -52,7 +52,7 @@ func parseOuterEvent(rawE json.RawMessage) (EventsAPIEvent, error) {
 				"",
 				"unmarshalling_error",
 				"",
-				&slack.UnmarshallingErrorEvent{ErrorObj: err},
+				&uim.UnmarshallingErrorEvent{ErrorObj: err},
 				EventsAPIInnerEvent{},
 			}, err
 		}
@@ -73,7 +73,7 @@ func parseOuterEvent(rawE json.RawMessage) (EventsAPIEvent, error) {
 			"",
 			"unmarshalling_error",
 			"",
-			&slack.UnmarshallingErrorEvent{ErrorObj: err},
+			&uim.UnmarshallingErrorEvent{ErrorObj: err},
 			EventsAPIInnerEvent{},
 		}, err
 	}
@@ -88,7 +88,7 @@ func parseOuterEvent(rawE json.RawMessage) (EventsAPIEvent, error) {
 }
 
 func parseInnerEvent(e *EventsAPICallbackEvent) (EventsAPIEvent, error) {
-	iE := &slack.Event{}
+	iE := &uim.Event{}
 	rawInnerJSON := e.InnerEvent
 	err := json.Unmarshal(*rawInnerJSON, iE)
 	if err != nil {
@@ -97,7 +97,7 @@ func parseInnerEvent(e *EventsAPICallbackEvent) (EventsAPIEvent, error) {
 			e.TeamID,
 			"unmarshalling_error",
 			e.APIAppID,
-			&slack.UnmarshallingErrorEvent{ErrorObj: err},
+			&uim.UnmarshallingErrorEvent{ErrorObj: err},
 			EventsAPIInnerEvent{},
 		}, err
 	}
@@ -121,7 +121,7 @@ func parseInnerEvent(e *EventsAPICallbackEvent) (EventsAPIEvent, error) {
 			e.TeamID,
 			"unmarshalling_error",
 			e.APIAppID,
-			&slack.UnmarshallingErrorEvent{ErrorObj: err},
+			&uim.UnmarshallingErrorEvent{ErrorObj: err},
 			EventsAPIInnerEvent{},
 		}, err
 	}
@@ -152,7 +152,7 @@ func OptionVerifyToken(v verifier) Option {
 	}
 }
 
-// OptionNoVerifyToken skips the check of the Slack verification token
+// OptionNoVerifyToken skips the check of the UIM verification token
 func OptionNoVerifyToken() Option {
 	return func(cfg *Config) {
 		cfg.TokenVerified = true
@@ -196,7 +196,7 @@ func ParseEvent(rawEvent json.RawMessage, opts ...Option) (EventsAPIEvent, error
 				"",
 				"unmarshalling_error",
 				"",
-				&slack.UnmarshallingErrorEvent{ErrorObj: err},
+				&uim.UnmarshallingErrorEvent{ErrorObj: err},
 				EventsAPIInnerEvent{},
 			}, err
 		}
@@ -210,7 +210,7 @@ func ParseEvent(rawEvent json.RawMessage, opts ...Option) (EventsAPIEvent, error
 			"",
 			"unmarshalling_error",
 			"",
-			&slack.UnmarshallingErrorEvent{ErrorObj: err},
+			&uim.UnmarshallingErrorEvent{ErrorObj: err},
 			EventsAPIInnerEvent{},
 		}, err
 	}

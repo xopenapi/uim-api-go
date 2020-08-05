@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -17,7 +17,7 @@ type ViewState struct {
 }
 
 type View struct {
-	SlackResponse
+	UimResponse
 	ID              string           `json:"id"`
 	TeamID          string           `json:"team_id"`
 	Type            ViewType         `json:"type"`
@@ -141,7 +141,7 @@ type updateViewRequest struct {
 }
 
 type ViewResponse struct {
-	SlackResponse
+	UimResponse
 	View `json:"view"`
 }
 

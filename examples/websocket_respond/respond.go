@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New(
+	api := uim.New(
 		"YOUR-TOKEN-HERE",
 	)
 
@@ -17,7 +17,7 @@ func main() {
 
 	for msg := range rtm.IncomingEvents {
 		switch ev := msg.Data.(type) {
-		case *slack.MessageEvent:
+		case *uim.MessageEvent:
 			msg := ev.Msg
 
 			if msg.SubType != "" {
@@ -39,10 +39,10 @@ func main() {
 
 			rtm.SendMessage(resp)
 
-		case *slack.ConnectedEvent:
-			fmt.Println("Connected to Slack")
+		case *uim.ConnectedEvent:
+			fmt.Println("Connected to UIM")
 
-		case *slack.InvalidAuthEvent:
+		case *uim.InvalidAuthEvent:
 			fmt.Println("Invalid token")
 			return
 		}

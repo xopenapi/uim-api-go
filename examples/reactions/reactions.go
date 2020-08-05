@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
@@ -13,11 +13,11 @@ func main() {
 		debug    bool
 	)
 
-	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your Slack API Token")
+	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your UIM API Token")
 	flag.BoolVar(&debug, "debug", false, "Show JSON output")
 	flag.Parse()
 
-	api := slack.New(apiToken, slack.OptionDebug(debug))
+	api := uim.New(apiToken, uim.OptionDebug(debug))
 
 	var (
 		postAsUserName  string
@@ -38,7 +38,7 @@ func main() {
 	postAsUserName = authTest.User
 	postAsUserID = authTest.UserID
 
-	// Posting to DM with self causes a conversation with slackbot.
+	// Posting to DM with self causes a conversation with uimbot.
 	postToUserName = authTest.User
 	postToUserID = authTest.UserID
 
@@ -53,14 +53,14 @@ func main() {
 	fmt.Printf("Posting as %s (%s) in DM with %s (%s), channel %s\n", postAsUserName, postAsUserID, postToUserName, postToUserID, postToChannelID)
 
 	// Post a message.
-	channelID, timestamp, err := api.PostMessage(postToChannelID, slack.MsgOptionText("Is this any good?", false))
+	channelID, timestamp, err := api.PostMessage(postToChannelID, uim.MsgOptionText("Is this any good?", false))
 	if err != nil {
 		fmt.Printf("Error posting message: %s\n", err)
 		return
 	}
 
 	// Grab a reference to the message.
-	msgRef := slack.NewRefToMessage(channelID, timestamp)
+	msgRef := uim.NewRefToMessage(channelID, timestamp)
 
 	// React with :+1:
 	if err = api.AddReaction("+1", msgRef); err != nil {
@@ -75,7 +75,7 @@ func main() {
 	}
 
 	// Get all reactions on the message.
-	msgReactions, err := api.GetReactions(msgRef, slack.NewGetReactionsParameters())
+	msgReactions, err := api.GetReactions(msgRef, uim.NewGetReactionsParameters())
 	if err != nil {
 		fmt.Printf("Error getting reactions: %s\n", err)
 		return
@@ -87,7 +87,7 @@ func main() {
 	}
 
 	// List all of the users reactions.
-	listReactions, _, err := api.ListReactions(slack.NewListReactionsParameters())
+	listReactions, _, err := api.ListReactions(uim.NewListReactionsParameters())
 	if err != nil {
 		fmt.Printf("Error listing reactions: %s\n", err)
 		return
@@ -109,7 +109,7 @@ func main() {
 	}
 
 	// Get all reactions on the message.
-	msgReactions, err = api.GetReactions(msgRef, slack.NewGetReactionsParameters())
+	msgReactions, err = api.GetReactions(msgRef, uim.NewGetReactionsParameters())
 	if err != nil {
 		fmt.Printf("Error getting reactions: %s\n", err)
 		return

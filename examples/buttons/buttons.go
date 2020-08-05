@@ -5,24 +5,24 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
-	attachment := slack.Attachment{
+	api := uim.New("YOUR_TOKEN_HERE")
+	attachment := uim.Attachment{
 		Pretext:    "pretext",
 		Fallback:   "We don't currently support your client",
 		CallbackID: "accept_or_reject",
 		Color:      "#3AA3E3",
-		Actions: []slack.AttachmentAction{
-			slack.AttachmentAction{
+		Actions: []uim.AttachmentAction{
+			uim.AttachmentAction{
 				Name:  "accept",
 				Text:  "Accept",
 				Type:  "button",
 				Value: "accept",
 			},
-			slack.AttachmentAction{
+			uim.AttachmentAction{
 				Name:  "reject",
 				Text:  "Reject",
 				Type:  "button",
@@ -32,8 +32,8 @@ func main() {
 		},
 	}
 
-	message := slack.MsgOptionAttachments(attachment)
-	channelID, timestamp, err := api.PostMessage("CHANNEL_ID", slack.MsgOptionText("", false), message)
+	message := uim.MsgOptionAttachments(attachment)
+	channelID, timestamp, err := api.PostMessage("CHANNEL_ID", uim.MsgOptionText("", false), message)
 	if err != nil {
 		fmt.Printf("Could not send message: %v", err)
 	}
@@ -42,7 +42,7 @@ func main() {
 }
 
 func actionHandler(w http.ResponseWriter, r *http.Request) {
-	var payload slack.InteractionCallback
+	var payload uim.InteractionCallback
 	err := json.Unmarshal([]byte(r.FormValue("payload")), &payload)
 	if err != nil {
 		fmt.Printf("Could not parse action response JSON: %v", err)

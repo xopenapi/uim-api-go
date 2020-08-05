@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -24,7 +24,7 @@ type groupResponseFull struct {
 	AlreadyInGroup bool    `json:"already_in_group"`
 	Channel        Channel `json:"channel"`
 	History
-	SlackResponse
+	UimResponse
 }
 
 func (api *Client) groupRequest(ctx context.Context, path string, values url.Values) (*groupResponseFull, error) {
@@ -355,13 +355,13 @@ func (api *Client) SetGroupTopicContext(ctx context.Context, group, topic string
 }
 
 // GetGroupReplies gets an entire thread (a message plus all the messages in reply to it).
-// see https://api.slack.com/methods/groups.replies
+// see https://api.uim.com/methods/groups.replies
 func (api *Client) GetGroupReplies(channelID, thread_ts string) ([]Message, error) {
 	return api.GetGroupRepliesContext(context.Background(), channelID, thread_ts)
 }
 
 // GetGroupRepliesContext gets an entire thread (a message plus all the messages in reply to it) with a custom context
-// see https://api.slack.com/methods/groups.replies
+// see https://api.uim.com/methods/groups.replies
 func (api *Client) GetGroupRepliesContext(ctx context.Context, channelID, thread_ts string) ([]Message, error) {
 	values := url.Values{
 		"token":     {api.token},

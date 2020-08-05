@@ -1,4 +1,4 @@
-package slack_test
+package uim_test
 
 import (
 	"fmt"
@@ -8,8 +8,8 @@ import (
 	"time"
 
 	websocket "github.com/gorilla/websocket"
-	"github.com/slack-go/slack"
-	"github.com/slack-go/slack/slacktest"
+	"github.com/xopenapi/uim-api-go"
+	"github.com/xopenapi/uim-api-go/uimtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,18 +20,18 @@ const (
 
 func TestRTMBeforeEvents(t *testing.T) {
 	// Set up the test server.
-	testServer := slacktest.NewTestServer()
+	testServer := uimtest.NewTestServer()
 	go testServer.Start()
 
 	// Setup and start the RTM.
-	api := slack.New(testToken, slack.OptionAPIURL(testServer.GetAPIURL()))
+	api := uim.New(testToken, uim.OptionAPIURL(testServer.GetAPIURL()))
 	rtm := api.NewRTM()
 
 	done := make(chan struct{})
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.DisconnectedEvent:
+			case *uim.DisconnectedEvent:
 				if ev.Intentional {
 					close(done)
 					return
@@ -53,10 +53,10 @@ func TestRTMBeforeEvents(t *testing.T) {
 
 func TestRTMGoodbye(t *testing.T) {
 	// Set up the test server.
-	testServer := slacktest.NewTestServer(
-		func(c slacktest.Customize) {
-			c.Handle("/ws", slacktest.Websocket(func(conn *websocket.Conn) {
-				if err := slacktest.RTMServerSendGoodbye(conn); err != nil {
+	testServer := uimtest.NewTestServer(
+		func(c uimtest.Customize) {
+			c.Handle("/ws", uimtest.Websocket(func(conn *websocket.Conn) {
+				if err := uimtest.RTMServerSendGoodbye(conn); err != nil {
 					log.Println("failed to send goodbye", err)
 				}
 			}))
@@ -65,13 +65,13 @@ func TestRTMGoodbye(t *testing.T) {
 	go testServer.Start()
 
 	// Setup and start the RTM.
-	api := slack.New(
+	api := uim.New(
 		testToken,
-		slack.OptionAPIURL(testServer.GetAPIURL()),
+		uim.OptionAPIURL(testServer.GetAPIURL()),
 	)
 
 	rtm := api.NewRTM(
-		slack.RTMOptionPingInterval(100 * time.Millisecond),
+		uim.RTMOptionPingInterval(100 * time.Millisecond),
 	)
 
 	done := make(chan struct{})
@@ -81,12 +81,12 @@ func TestRTMGoodbye(t *testing.T) {
 	func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ConnectedEvent:
+			case *uim.ConnectedEvent:
 				connected += 1
 				if connected > 5 {
 					rtm.Disconnect()
 				}
-			case *slack.DisconnectedEvent:
+			case *uim.DisconnectedEvent:
 				// t.Log("disconnect event received", ev.Intentional, ev.Cause)
 				if ev.Intentional {
 					close(done)
@@ -112,9 +112,9 @@ func TestRTMGoodbye(t *testing.T) {
 
 func TestRTMDeadConnection(t *testing.T) {
 	// Set up the test server.
-	testServer := slacktest.NewTestServer(
-		func(c slacktest.Customize) {
-			c.Handle("/ws", slacktest.Websocket(func(conn *websocket.Conn) {
+	testServer := uimtest.NewTestServer(
+		func(c uimtest.Customize) {
+			c.Handle("/ws", uimtest.Websocket(func(conn *websocket.Conn) {
 				// closes immediately
 			}))
 		},
@@ -122,13 +122,13 @@ func TestRTMDeadConnection(t *testing.T) {
 	go testServer.Start()
 
 	// Setup and start the RTM.
-	api := slack.New(
+	api := uim.New(
 		testToken,
-		slack.OptionAPIURL(testServer.GetAPIURL()),
+		uim.OptionAPIURL(testServer.GetAPIURL()),
 	)
 
 	rtm := api.NewRTM(
-		slack.RTMOptionPingInterval(100 * time.Millisecond),
+		uim.RTMOptionPingInterval(100 * time.Millisecond),
 	)
 
 	go rtm.ManageConnection()
@@ -138,12 +138,12 @@ func TestRTMDeadConnection(t *testing.T) {
 	func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ConnectedEvent:
+			case *uim.ConnectedEvent:
 				connected += 1
 				if connected > 5 {
 					rtm.Disconnect()
 				}
-			case *slack.DisconnectedEvent:
+			case *uim.DisconnectedEvent:
 				// t.Log("disconnect event received", ev.Intentional, ev.Cause)
 				if ev.Intentional {
 					close(done)
@@ -168,8 +168,8 @@ func TestRTMDeadConnection(t *testing.T) {
 }
 
 func TestRTMDisconnect(t *testing.T) {
-	// actually connect to slack here w/ an invalid token
-	api := slack.New(testToken)
+	// actually connect to uim here w/ an invalid token
+	api := uim.New(testToken)
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
 
@@ -181,13 +181,13 @@ func TestRTMDisconnect(t *testing.T) {
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.InvalidAuthEvent:
+			case *uim.InvalidAuthEvent:
 				t.Log("invalid auth event received")
 				disconnectedReceived = true
 				close(done)
-			case *slack.ConnectingEvent:
+			case *uim.ConnectingEvent:
 				connectingReceived = true
-			case *slack.ConnectedEvent:
+			case *uim.ConnectedEvent:
 				t.Error("received connected events on an invalid connection")
 				t.Fail()
 			default:
@@ -210,8 +210,8 @@ func TestRTMDisconnect(t *testing.T) {
 
 func TestRTMConnectRateLimit(t *testing.T) {
 	// Set up the test server.
-	testServer := slacktest.NewTestServer(
-		func(c slacktest.Customize) {
+	testServer := uimtest.NewTestServer(
+		func(c uimtest.Customize) {
 			c.Handle("/rtm.connect", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.Header().Add("Retry-After", "1")
 				w.WriteHeader(http.StatusTooManyRequests)
@@ -221,22 +221,22 @@ func TestRTMConnectRateLimit(t *testing.T) {
 	go testServer.Start()
 
 	// Setup and start the RTM.
-	api := slack.New(testToken, slack.OptionAPIURL(testServer.GetAPIURL()))
+	api := uim.New(testToken, uim.OptionAPIURL(testServer.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
 
 	// Observe incoming failures
-	connectionFailure := make(chan *slack.ConnectionErrorEvent)
+	connectionFailure := make(chan *uim.ConnectionErrorEvent)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ConnectingEvent:
-			case *slack.ConnectionErrorEvent:
+			case *uim.ConnectingEvent:
+			case *uim.ConnectionErrorEvent:
 				connectionFailure <- ev
 				if ev.Attempt > 5 {
 					rtm.Disconnect()
 				}
-			case *slack.DisconnectedEvent:
+			case *uim.DisconnectedEvent:
 				if ev.Intentional {
 					close(connectionFailure)
 					return
@@ -257,11 +257,11 @@ func TestRTMConnectRateLimit(t *testing.T) {
 
 func TestRTMSingleConnect(t *testing.T) {
 	// Set up the test server.
-	testServer := slacktest.NewTestServer()
+	testServer := uimtest.NewTestServer()
 	go testServer.Start()
 
 	// Setup and start the RTM.
-	api := slack.New(testToken, slack.OptionAPIURL(testServer.GetAPIURL()))
+	api := uim.New(testToken, uim.OptionAPIURL(testServer.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
 
@@ -273,25 +273,25 @@ func TestRTMSingleConnect(t *testing.T) {
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ConnectingEvent:
+			case *uim.ConnectingEvent:
 				if connectingReceived {
 					t.Error("Received multiple connecting events.")
 					t.Fail()
 				}
 				connectingReceived = true
-			case *slack.ConnectedEvent:
+			case *uim.ConnectedEvent:
 				if connectedReceived {
 					t.Error("Received multiple connected events.")
 					t.Fail()
 				}
 				connectedReceived = true
-			case *slack.MessageEvent:
+			case *uim.MessageEvent:
 				if ev.Text == testMessage {
 					testMessageReceived = true
 					rtm.Disconnect()
 				}
 				t.Logf("Discarding message with content %+v", ev)
-			case *slack.DisconnectedEvent:
+			case *uim.DisconnectedEvent:
 				if ev.Intentional {
 					done <- struct{}{}
 					return

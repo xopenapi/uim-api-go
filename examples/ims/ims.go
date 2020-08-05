@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
+	api := uim.New("YOUR_TOKEN_HERE")
 
 	userID := "USER_ID"
 
@@ -17,5 +17,5 @@ func main() {
 		fmt.Printf("%s\n", err)
 	}
 
-	api.PostMessage(channelID, slack.MsgOptionText("Hello World!", false))
+	api.PostMessage(channelID, uim.MsgOptionText("Hello World!", false))
 }

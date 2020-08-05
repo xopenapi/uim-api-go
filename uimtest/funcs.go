@@ -1,4 +1,4 @@
-package slacktest
+package uimtest
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"time"
 
 	websocket "github.com/gorilla/websocket"
-	slack "github.com/slack-go/slack"
+	uim "github.com/uim-go/uim"
 )
 
 func (sts *Server) queueForWebsocket(s, hubname string) {
@@ -98,22 +98,22 @@ func BotIDFromContext(ctx context.Context) string {
 }
 
 // generate a full rtminfo response for initial rtm connections
-func generateRTMInfo(ctx context.Context, wsurl string) *fullInfoSlackResponse {
-	rtmInfo := slack.Info{
+func generateRTMInfo(ctx context.Context, wsurl string) *fullInfoUimResponse {
+	rtmInfo := uim.Info{
 		URL:  wsurl,
 		Team: defaultTeam,
 		User: defaultBotInfo,
 	}
 	rtmInfo.User.ID = BotIDFromContext(ctx)
 	rtmInfo.User.Name = BotNameFromContext(ctx)
-	return &fullInfoSlackResponse{
+	return &fullInfoUimResponse{
 		rtmInfo,
 		okWebResponse,
 	}
 }
 
-func nowAsJSONTime() slack.JSONTime {
-	return slack.JSONTime(time.Now().Unix())
+func nowAsJSONTime() uim.JSONTime {
+	return uim.JSONTime(time.Now().Unix())
 }
 
 func defaultBotInfoJSON(ctx context.Context) string {

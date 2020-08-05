@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -34,7 +34,7 @@ const (
 		},
 		"action_ts": "936893340.702759",
 		"token": "M1AqUUw3FqayAbqNtsGMch72",
-		"response_url": "https://hooks.slack.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ"
+		"response_url": "https://hooks.uim.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ"
 	}`
 	actionCallback     = `{}`
 	viewClosedCallback = `{
@@ -131,7 +131,7 @@ func TestDialogCallback(t *testing.T) {
 		Type:        InteractionTypeDialogSubmission,
 		Token:       "M1AqUUw3FqayAbqNtsGMch72",
 		CallbackID:  "employee_offsite_1138b",
-		ResponseURL: "https://hooks.slack.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ",
+		ResponseURL: "https://hooks.uim.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ",
 		ActionTs:    "936893340.702759",
 		Team:        Team{ID: "T1ABCD2E12", Name: "", Domain: "coverbands"},
 		Channel: Channel{

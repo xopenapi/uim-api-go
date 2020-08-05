@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // DNDUpdatedEvent represents the update event for Do Not Disturb
 type DNDUpdatedEvent struct {

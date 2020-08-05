@@ -1,10 +1,10 @@
-Slack API in Go [![GoDoc](https://godoc.org/github.com/slack-go/slack?status.svg)](https://godoc.org/github.com/slack-go/slack) [![Build Status](https://travis-ci.org/slack-go/slack.svg)](https://travis-ci.org/slack-go/slack)
+UIM API in Go [![GoDoc](https://godoc.org/github.com/xopenapi/uim-api-go?status.svg)](https://godoc.org/github.com/xopenapi/uim-api-go) [![Build Status](https://travis-ci.org/xopenapi/uim-api-go.svg)](https://travis-ci.org/xopenapi/uim-api-go)
 ===============
-This is the original Slack library for Go created by Norberto Lopez, transferred to a Github organization.
+This is the original UIM library for Go created by Norberto Lopez, transferred to a Github organization.
 
-[![Join the chat at https://gitter.im/go-slack/Lobby](https://badges.gitter.im/go-slack/Lobby.svg)](https://gitter.im/go-slack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/xopenapi/Lobby](https://badges.gitter.im/go-uim/Lobby.svg)](https://gitter.im/xopenapi/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This library supports most if not all of the `api.slack.com` REST
+This library supports most if not all of the `api.uim.com` REST
 calls, as well as the Real-Time Messaging protocol over websocket, in
 a fully managed way.
 
@@ -13,13 +13,13 @@ a fully managed way.
 
 ## Changelog
 
-[CHANGELOG.md](https://github.com/slack-go/slack/blob/master/CHANGELOG.md) is available. Please visit it for updates.
+[CHANGELOG.md](https://github.com/xopenapi/uim-api-go/blob/master/CHANGELOG.md) is available. Please visit it for updates.
 
 ## Installing
 
 ### *go get*
 
-    $ go get -u github.com/slack-go/slack
+    $ go get -u github.com/xopenapi/uim-api-go
 
 ## Example
 
@@ -29,14 +29,14 @@ a fully managed way.
 import (
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/xopenapi/uim-api-go"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
+	api := uim.New("YOUR_TOKEN_HERE")
 	// If you set debugging, it will log all requests to the console
 	// Useful when encountering issues
-	// slack.New("YOUR_TOKEN_HERE", slack.OptionDebug(true))
+	// uim.New("YOUR_TOKEN_HERE", uim.OptionDebug(true))
 	groups, err := api.GetGroups(false)
 	if err != nil {
 		fmt.Printf("%s\n", err)
@@ -54,11 +54,11 @@ func main() {
 import (
     "fmt"
 
-    "github.com/slack-go/slack"
+    "github.com/xopenapi/uim-api-go"
 )
 
 func main() {
-    api := slack.New("YOUR_TOKEN_HERE")
+    api := uim.New("YOUR_TOKEN_HERE")
     user, err := api.GetUserInfo("U023BECGF")
     if err != nil {
 	    fmt.Printf("%s\n", err)
@@ -70,12 +70,12 @@ func main() {
 
 ## Minimal RTM usage:
 
-See https://github.com/slack-go/slack/blob/master/examples/websocket/websocket.go
+See https://github.com/xopenapi/uim-api-go/blob/master/examples/websocket/websocket.go
 
 
 ## Minimal EventsAPI usage:
 
-See https://github.com/slack-go/slack/blob/master/examples/eventsapi/events.go
+See https://github.com/xopenapi/uim-api-go/blob/master/examples/eventsapi/events.go
 
 
 ## Contributing

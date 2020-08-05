@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 /*
@@ -16,17 +16,17 @@ func main() {
 		debug    bool
 	)
 
-	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your Slack API Token")
+	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your UIM API Token")
 	flag.BoolVar(&debug, "debug", false, "Show JSON output")
 	flag.Parse()
 
-	api := slack.New(apiToken, slack.OptionDebug(debug))
+	api := uim.New(apiToken, uim.OptionDebug(debug))
 
 	var (
 		postAsUserName  string
 		postAsUserID    string
 		postToChannelID string
-		channels        []slack.Channel
+		channels        []uim.Channel
 	)
 
 	// Find the user to post as.
@@ -77,14 +77,14 @@ func main() {
 	fmt.Printf("Posting as %s (%s) in channel %s\n", postAsUserName, postAsUserID, postToChannelID)
 
 	// Post a message.
-	channelID, timestamp, err := api.PostMessage(postToChannelID, slack.MsgOptionText("Is this any good?", false))
+	channelID, timestamp, err := api.PostMessage(postToChannelID, uim.MsgOptionText("Is this any good?", false))
 	if err != nil {
 		fmt.Printf("Error posting message: %s\n", err)
 		return
 	}
 
 	// Grab a reference to the message.
-	msgRef := slack.NewRefToMessage(channelID, timestamp)
+	msgRef := uim.NewRefToMessage(channelID, timestamp)
 
 	// Add message pin to channel
 	if err = api.AddPin(channelID, msgRef); err != nil {

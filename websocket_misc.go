@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -13,13 +13,13 @@ type AckMessage struct {
 	RTMResponse
 }
 
-// RTMResponse encapsulates response details as returned by the Slack API
+// RTMResponse encapsulates response details as returned by the UIM API
 type RTMResponse struct {
 	Ok    bool      `json:"ok"`
 	Error *RTMError `json:"error"`
 }
 
-// RTMError encapsulates error information as returned by the Slack API
+// RTMError encapsulates error information as returned by the UIM API
 type RTMError struct {
 	Code int
 	Msg  string
@@ -29,7 +29,7 @@ func (s RTMError) Error() string {
 	return fmt.Sprintf("Code %d - %s", s.Code, s.Msg)
 }
 
-// MessageEvent represents a Slack Message (used as the event type for an incoming message)
+// MessageEvent represents a UIM Message (used as the event type for an incoming message)
 type MessageEvent Message
 
 // RTMEvent is the main wrapper. You will find all the other messages attached

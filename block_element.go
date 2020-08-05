@@ -1,6 +1,6 @@
-package slack
+package uim
 
-// https://api.slack.com/reference/messaging/block-elements
+// https://api.uim.com/reference/messaging/block-elements
 
 const (
 	METCheckboxGroups MessageElementType = "checkboxes"
@@ -79,15 +79,15 @@ func NewAccessory(element BlockElement) *Accessory {
 }
 
 // BlockElements is a convenience struct defined to allow dynamic unmarshalling of
-// the "elements" value in Slack's JSON response, which varies depending on BlockElement type
+// the "elements" value in UIM's JSON response, which varies depending on BlockElement type
 type BlockElements struct {
 	ElementSet []BlockElement `json:"elements,omitempty"`
 }
 
 // UnknownBlockElement any block element that this library does not directly support.
 // See the "Rich Elements" section at the following URL:
-// https://api.slack.com/changelog/2019-09-what-they-see-is-what-you-get-and-more-and-less
-// New block element types may be introduced by Slack at any time; this is a catch-all for any such block elements.
+// https://api.uim.com/changelog/2019-09-what-they-see-is-what-you-get-and-more-and-less
+// New block element types may be introduced by UIM at any time; this is a catch-all for any such block elements.
 type UnknownBlockElement struct {
 	Type     MessageElementType `json:"type"`
 	Elements BlockElements
@@ -102,7 +102,7 @@ func (s UnknownBlockElement) ElementType() MessageElementType {
 // in section and context blocks only. If you want a block with only an image
 // in it, you're looking for the image block.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#image
+// More Information: https://api.uim.com/reference/messaging/block-elements#image
 type ImageBlockElement struct {
 	Type     MessageElementType `json:"type"`
 	ImageURL string             `json:"image_url"`
@@ -139,7 +139,7 @@ const (
 // button can be a trigger for anything from opening a simple link to starting
 // a complex workflow.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#button
+// More Information: https://api.uim.com/reference/messaging/block-elements#button
 type ButtonBlockElement struct {
 	Type     MessageElementType       `json:"type,omitempty"`
 	Text     *TextBlockObject         `json:"text"`
@@ -173,14 +173,14 @@ func NewButtonBlockElement(actionID, value string, text *TextBlockObject) *Butto
 
 // OptionsResponse defines the response used for select block typahead.
 //
-// More Information: https://api.slack.com/reference/block-kit/block-elements#external_multi_select
+// More Information: https://api.uim.com/reference/block-kit/block-elements#external_multi_select
 type OptionsResponse struct {
 	Options []*OptionBlockObject `json:"options,omitempty"`
 }
 
 // OptionGroupsResponse defines the response used for select block typahead.
 //
-// More Information: https://api.slack.com/reference/block-kit/block-elements#external_multi_select
+// More Information: https://api.uim.com/reference/block-kit/block-elements#external_multi_select
 type OptionGroupsResponse struct {
 	OptionGroups []*OptionGroupBlockObject `json:"option_groups,omitempty"`
 }
@@ -188,7 +188,7 @@ type OptionGroupsResponse struct {
 // SelectBlockElement defines the simplest form of select menu, with a static list
 // of options passed in when defining the element.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#select
+// More Information: https://api.uim.com/reference/messaging/block-elements#select
 type SelectBlockElement struct {
 	Type                         string                    `json:"type,omitempty"`
 	Placeholder                  *TextBlockObject          `json:"placeholder,omitempty"`
@@ -240,7 +240,7 @@ func NewOptionsGroupSelectBlockElement(
 // MultiSelectBlockElement defines a multiselect menu, with a static list
 // of options passed in when defining the element.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#multi_select
+// More Information: https://api.uim.com/reference/messaging/block-elements#multi_select
 type MultiSelectBlockElement struct {
 	Type                 string                    `json:"type,omitempty"`
 	Placeholder          *TextBlockObject          `json:"placeholder,omitempty"`
@@ -292,7 +292,7 @@ func NewOptionsGroupMultiSelectBlockElement(
 // when a user clicks on this overflow button, they will be presented with a
 // list of options to choose from.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#overflow
+// More Information: https://api.uim.com/reference/messaging/block-elements#overflow
 type OverflowBlockElement struct {
 	Type     MessageElementType       `json:"type"`
 	ActionID string                   `json:"action_id,omitempty"`
@@ -318,7 +318,7 @@ func NewOverflowBlockElement(actionID string, options ...*OptionBlockObject) *Ov
 // date from a calendar style UI. Date picker elements can be used inside of
 // section and actions blocks.
 //
-// More Information: https://api.slack.com/reference/messaging/block-elements#datepicker
+// More Information: https://api.uim.com/reference/messaging/block-elements#datepicker
 type DatePickerBlockElement struct {
 	Type        MessageElementType       `json:"type"`
 	ActionID    string                   `json:"action_id,omitempty"`
@@ -344,7 +344,7 @@ func NewDatePickerBlockElement(actionID string) *DatePickerBlockElement {
 // data.
 // Plain-text input elements are currently only available in modals.
 //
-// More Information: https://api.slack.com/reference/block-kit/block-elements#input
+// More Information: https://api.uim.com/reference/block-kit/block-elements#input
 type PlainTextInputBlockElement struct {
 	Type         MessageElementType `json:"type"`
 	ActionID     string             `json:"action_id,omitempty"`
@@ -373,7 +373,7 @@ func NewPlainTextInputBlockElement(placeholder *TextBlockObject, actionID string
 // CheckboxGroupsBlockElement defines an element which allows users to choose
 // one or more items from a list of possible options.
 //
-// More Information: https://api.slack.com/reference/block-kit/block-elements#checkboxes
+// More Information: https://api.uim.com/reference/block-kit/block-elements#checkboxes
 type CheckboxGroupsBlockElement struct {
 	Type           MessageElementType       `json:"type"`
 	ActionID       string                   `json:"action_id,omitempty"`
@@ -399,7 +399,7 @@ func NewCheckboxGroupsBlockElement(actionID string, options ...*OptionBlockObjec
 // RadioButtonsBlockElement defines an element which lets users choose one item
 // from a list of possible options.
 //
-// More Information: https://api.slack.com/reference/block-kit/block-elements#radio
+// More Information: https://api.uim.com/reference/block-kit/block-elements#radio
 type RadioButtonsBlockElement struct {
 	Type          MessageElementType       `json:"type"`
 	ActionID      string                   `json:"action_id,omitempty"`

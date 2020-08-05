@@ -3,18 +3,18 @@ package main
 import (
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
-	attachment := slack.Attachment{
+	api := uim.New("YOUR_TOKEN_HERE")
+	attachment := uim.Attachment{
 		Pretext: "some pretext",
 		Text:    "some text",
 		// Uncomment the following part to send a field too
 		/*
-			Fields: []slack.AttachmentField{
-				slack.AttachmentField{
+			Fields: []uim.AttachmentField{
+				uim.AttachmentField{
 					Title: "a",
 					Value: "no",
 				},
@@ -22,7 +22,7 @@ func main() {
 		*/
 	}
 
-	channelID, timestamp, err := api.PostMessage("CHANNEL_ID", slack.MsgOptionText("Some text", false), slack.MsgOptionAttachments(attachment))
+	channelID, timestamp, err := api.PostMessage("CHANNEL_ID", uim.MsgOptionText("Some text", false), uim.MsgOptionAttachments(attachment))
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return

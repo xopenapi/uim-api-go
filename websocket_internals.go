@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"fmt"
@@ -6,10 +6,10 @@ import (
 )
 
 /**
- * Internal events, created by this lib and not mapped to Slack APIs.
+ * Internal events, created by this lib and not mapped to UIM APIs.
  */
 
-// ConnectedEvent is used for when we connect to Slack
+// ConnectedEvent is used for when we connect to UIM
 type ConnectedEvent struct {
 	ConnectionCount int // 1 = first time, 2 = second time
 	Info            *Info
@@ -65,7 +65,7 @@ func (m *MessageTooLongEvent) Error() string {
 	return fmt.Sprintf("Message too long (max %d characters)", m.MaxLength)
 }
 
-// RateLimitEvent is used when Slack warns that rate-limits are being hit.
+// RateLimitEvent is used when UIM warns that rate-limits are being hit.
 type RateLimitEvent struct{}
 
 func (e *RateLimitEvent) Error() string {

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"testing"
@@ -9,7 +9,7 @@ import (
 func TestNewImageBlock(t *testing.T) {
 
 	imageText := NewTextBlockObject("plain_text", "Location", false, false)
-	imageBlock := NewImageBlock("https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png", "Marker", "test", imageText)
+	imageBlock := NewImageBlock("https://api.uim.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png", "Marker", "test", imageText)
 
 	assert.Equal(t, string(imageBlock.Type), "image")
 	assert.Equal(t, imageBlock.Title.Type, "plain_text")

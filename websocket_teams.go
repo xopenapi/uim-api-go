@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // TeamJoinEvent represents the Team join event
 type TeamJoinEvent struct {

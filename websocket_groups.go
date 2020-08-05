@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // GroupCreatedEvent represents the Group created event
 type GroupCreatedEvent struct {

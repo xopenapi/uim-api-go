@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // ChannelCreatedEvent represents the Channel created event
 type ChannelCreatedEvent struct {

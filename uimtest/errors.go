@@ -1,7 +1,7 @@
-package slacktest
+package uimtest
 
 import (
-	"github.com/slack-go/slack/internal/errorsx"
+	"github.com/uim-go/uim/internal/errorsx"
 )
 
 const (

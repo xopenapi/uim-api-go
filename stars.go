@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -24,7 +24,7 @@ type StarredItem Item
 type listResponseFull struct {
 	Items  []Item `json:"items"`
 	Paging `json:"paging"`
-	SlackResponse
+	UimResponse
 }
 
 // NewStarsParameters initialises StarsParameters with default values
@@ -57,7 +57,7 @@ func (api *Client) AddStarContext(ctx context.Context, channel string, item Item
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "stars.add", values, response); err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func (api *Client) RemoveStarContext(ctx context.Context, channel string, item I
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "stars.remove", values, response); err != nil {
 		return err
 	}
@@ -162,7 +162,7 @@ func (api *Client) GetStarredContext(ctx context.Context, params StarsParameters
 
 type listResponsePaginated struct {
 	Items []Item `json:"items"`
-	SlackResponse
+	UimResponse
 	Metadata ResponseMetadata `json:"response_metadata"`
 }
 
@@ -210,7 +210,7 @@ func (api *Client) ListStarsPaginated(options ...ListStarsOption) StarredItemPag
 func newStarPagination(c *Client, options ...ListStarsOption) (sip StarredItemPagination) {
 	sip = StarredItemPagination{
 		c:     c,
-		limit: 200, // per slack api documentation.
+		limit: 200, // per uim api documentation.
 	}
 
 	for _, opt := range options {

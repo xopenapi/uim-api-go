@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"errors"
@@ -18,9 +18,9 @@ func getTeamInfo(rw http.ResponseWriter, r *http.Request) {
 			"name": "notalar",
 			"domain": "notalar",
 			"icon": {
-              "image_34": "https://slack.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-34.png",
-              "image_44": "https://slack.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-44.png",
-              "image_55": "https://slack.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-55.png",
+              "image_34": "https://uim.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-34.png",
+              "image_44": "https://uim.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-44.png",
+              "image_55": "https://uim.global.ssl.fastly.net/66f9/img/avatars-teams/ava_0002-55.png",
               "image_default": true
           }
 		}}`)
@@ -63,7 +63,7 @@ func getTeamAccessLogs(rw http.ResponseWriter, r *http.Request) {
 			"date_last": 1475684645,
 			"count": 8,
 			"ip": "127.0.0.1",
-			"user_agent": "SlackWeb/3abb0ae2380d48a9ae20c58cc624ebcd Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Slack/1.2.6 Chrome/45.0.2454.85 AtomShell/0.34.3 Safari/537.36 Slack_SSB/1.2.6",
+			"user_agent": "UimWeb/3abb0ae2380d48a9ae20c58cc624ebcd Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Uim/1.2.6 Chrome/45.0.2454.85 AtomShell/0.34.3 Safari/537.36 UIM_SSB/1.2.6",
 			"isp": "AT&T U-verse",
                         "country": "US",
                         "region": "IN"
@@ -128,7 +128,7 @@ func TestGetAccessLogs(t *testing.T) {
 	if login1.IP != "127.0.0.1" {
 		t.Fatal(ErrIncorrectResponse)
 	}
-	if !strings.HasPrefix(login1.UserAgent, "SlackWeb") {
+	if !strings.HasPrefix(login1.UserAgent, "UimWeb") {
 		t.Fatal(ErrIncorrectResponse)
 	}
 	if login1.ISP != "AT&T U-verse" {

@@ -8,15 +8,15 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
-var api = slack.New("YOUR_TOKEN")
+var api = uim.New("YOUR_TOKEN")
 var signingSecret = "YOUR_SIGNING_SECRET"
 
 // You can open a dialog with a user interaction. (like pushing buttons, slash commands ...)
-// https://api.slack.com/surfaces/modals
-// https://api.slack.com/interactivity/entry-points
+// https://api.uim.com/surfaces/modals
+// https://api.uim.com/interactivity/entry-points
 func main() {
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":3000", nil)
@@ -34,7 +34,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Verify signing secret
-	sv, err := slack.NewSecretsVerifier(r.Header, signingSecret)
+	sv, err := uim.NewSecretsVerifier(r.Header, signingSecret)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		log.Printf("[ERROR] Fail to verify SigningSecret: %v", err)
@@ -50,40 +50,40 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// Parse request body
 	str, _ := url.QueryUnescape(string(body))
 	str = strings.Replace(str, "payload=", "", 1)
-	var message slack.InteractionCallback
+	var message uim.InteractionCallback
 	if err := json.Unmarshal([]byte(str), &message); err != nil {
 		log.Printf("[ERROR] Fail to unmarchal json: %v", err)
 		return
 	}
 
 	switch message.Type {
-	case slack.InteractionTypeInteractionMessage:
+	case uim.InteractionTypeInteractionMessage:
 		// Make new dialog components and open a dialog.
 		// Component-Text
-		textInput := slack.NewTextInput("TextSample", "Sample label - Text", "Default value")
+		textInput := uim.NewTextInput("TextSample", "Sample label - Text", "Default value")
 
 		// Component-TextArea
-		textareaInput := slack.NewTextAreaInput("TexaAreaSample", "Sample label - TextArea", "Default value")
+		textareaInput := uim.NewTextAreaInput("TexaAreaSample", "Sample label - TextArea", "Default value")
 
 		// Component-Select menu
-		option1 := slack.DialogSelectOption{
+		option1 := uim.DialogSelectOption{
 			Label: "Display name 1",
 			Value: "Inner value 1",
 		}
-		option2 := slack.DialogSelectOption{
+		option2 := uim.DialogSelectOption{
 			Label: "Display name 2",
 			Value: "Inner value 2",
 		}
-		options := []slack.DialogSelectOption{option1, option2}
-		selectInput := slack.NewStaticSelectDialogInput("SelectSample", "Sample label - Select", options)
+		options := []uim.DialogSelectOption{option1, option2}
+		selectInput := uim.NewStaticSelectDialogInput("SelectSample", "Sample label - Select", options)
 
 		// Open a dialog
-		elements := []slack.DialogElement{
+		elements := []uim.DialogElement{
 			textInput,
 			textareaInput,
 			selectInput,
 		}
-		dialog := slack.Dialog{
+		dialog := uim.Dialog{
 			CallbackID:  "Callback_ID",
 			Title:       "Dialog title",
 			SubmitLabel: "Submit",
@@ -91,7 +91,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		api.OpenDialog(message.TriggerID, dialog)
 
-	case slack.InteractionTypeDialogSubmission:
+	case uim.InteractionTypeDialogSubmission:
 		// Receive a notification of a dialog submission
 		log.Printf("Successfully receive a dialog submission.")
 	}

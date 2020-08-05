@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 
 // Block Objects are also known as Composition Objects
 //
-// For more information: https://api.slack.com/reference/messaging/composition-objects
+// For more information: https://api.uim.com/reference/messaging/composition-objects
 
 // BlockObject defines an interface that all block object types should
 // implement.
@@ -117,7 +117,7 @@ func unmarshalBlockObject(r json.RawMessage, object blockObject) (blockObject, e
 
 // TextBlockObject defines a text element object to be used with blocks
 //
-// More Information: https://api.slack.com/reference/messaging/composition-objects#text
+// More Information: https://api.uim.com/reference/messaging/composition-objects#text
 type TextBlockObject struct {
 	Type     string `json:"type"`
 	Text     string `json:"text"`
@@ -157,7 +157,7 @@ func (t TextBlockObject) BlockType() MessageBlockType {
 // any interactive element. This dialog will ask the user to confirm their action by
 // offering a confirm and deny buttons.
 //
-// More Information: https://api.slack.com/reference/messaging/composition-objects#confirm
+// More Information: https://api.uim.com/reference/messaging/composition-objects#confirm
 type ConfirmationBlockObject struct {
 	Title   *TextBlockObject `json:"title"`
 	Text    *TextBlockObject `json:"text"`
@@ -188,7 +188,7 @@ func NewConfirmationBlockObject(title, text, confirm, deny *TextBlockObject) *Co
 
 // OptionBlockObject represents a single selectable item in a select menu
 //
-// More Information: https://api.slack.com/reference/messaging/composition-objects#option
+// More Information: https://api.uim.com/reference/messaging/composition-objects#option
 type OptionBlockObject struct {
 	Text  *TextBlockObject `json:"text"`
 	Value string           `json:"value"`
@@ -210,7 +210,7 @@ func (s OptionBlockObject) validateType() MessageObjectType {
 
 // OptionGroupBlockObject Provides a way to group options in a select menu.
 //
-// More Information: https://api.slack.com/reference/messaging/composition-objects#option-group
+// More Information: https://api.uim.com/reference/messaging/composition-objects#option-group
 type OptionGroupBlockObject struct {
 	Label   *TextBlockObject     `json:"label,omitempty"`
 	Options []*OptionBlockObject `json:"options"`

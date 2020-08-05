@@ -1,6 +1,6 @@
 // +build go1.13
 
-package slack
+package uim
 
 import (
 	"bytes"

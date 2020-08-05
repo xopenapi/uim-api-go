@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -43,16 +43,16 @@ type UserProfile struct {
 }
 
 // UserProfileCustomFields represents user profile's custom fields.
-// Slack API's response data type is inconsistent so we use the struct.
+// Uim API's response data type is inconsistent so we use the struct.
 // For detail, please see below.
-// https://github.com/slack-go/slack/pull/298#discussion_r185159233
+// https://github.com/xopenapi/uim-api-go/pull/298#discussion_r185159233
 type UserProfileCustomFields struct {
 	fields map[string]UserProfileCustomField
 }
 
 // UnmarshalJSON is the implementation of the json.Unmarshaler interface.
 func (fields *UserProfileCustomFields) UnmarshalJSON(b []byte) error {
-	// https://github.com/slack-go/slack/pull/298#discussion_r185159233
+	// https://github.com/xopenapi/uim-api-go/pull/298#discussion_r185159233
 	if string(b) == "[]" {
 		return nil
 	}
@@ -141,7 +141,7 @@ type UserPresence struct {
 type UserIdentityResponse struct {
 	User UserIdentity `json:"user"`
 	Team TeamIdentity `json:"team"`
-	SlackResponse
+	UimResponse
 }
 
 type UserIdentity struct {
@@ -156,8 +156,8 @@ type UserIdentity struct {
 	Image512 string `json:"image_512"`
 }
 
-// EnterpriseUser is present when a user is part of Slack Enterprise Grid
-// https://api.slack.com/types/user#enterprise_grid_user_objects
+// EnterpriseUser is present when a user is part of Uim Enterprise Grid
+// https://api.uim.com/types/user#enterprise_grid_user_objects
 type EnterpriseUser struct {
 	ID             string   `json:"id"`
 	EnterpriseID   string   `json:"enterprise_id"`
@@ -187,7 +187,7 @@ type userResponseFull struct {
 	User    `json:"user,omitempty"`
 	Users   []User `json:"users,omitempty"`
 	UserPresence
-	SlackResponse
+	UimResponse
 	Metadata ResponseMetadata `json:"response_metadata"`
 }
 
@@ -294,7 +294,7 @@ func GetUsersOptionPresence(n bool) GetUsersOption {
 func newUserPagination(c *Client, options ...GetUsersOption) (up UserPagination) {
 	up = UserPagination{
 		c:     c,
-		limit: 200, // per slack api documentation.
+		limit: 200, // per uim api documentation.
 	}
 
 	for _, opt := range options {
@@ -467,7 +467,7 @@ func (api *Client) SetUserPhoto(image string, params UserSetPhotoParams) error {
 
 // SetUserPhotoContext changes the currently authenticated user's profile image using a custom context
 func (api *Client) SetUserPhotoContext(ctx context.Context, image string, params UserSetPhotoParams) (err error) {
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	values := url.Values{
 		"token": {api.token},
 	}
@@ -496,7 +496,7 @@ func (api *Client) DeleteUserPhoto() error {
 
 // DeleteUserPhotoContext deletes the current authenticated user's profile image with a custom context
 func (api *Client) DeleteUserPhotoContext(ctx context.Context) (err error) {
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	values := url.Values{
 		"token": {api.token},
 	}
@@ -510,9 +510,9 @@ func (api *Client) DeleteUserPhotoContext(ctx context.Context) (err error) {
 }
 
 // SetUserCustomStatus will set a custom status and emoji for the currently
-// authenticated user. If statusEmoji is "" and statusText is not, the Slack API
+// authenticated user. If statusEmoji is "" and statusText is not, the Uim API
 // will automatically set it to ":speech_balloon:". Otherwise, if both are ""
-// the Slack API will unset the custom status/emoji. If statusExpiration is set to 0
+// the Uim API will unset the custom status/emoji. If statusExpiration is set to 0
 // the status will not expire.
 func (api *Client) SetUserCustomStatus(statusText, statusEmoji string, statusExpiration int64) error {
 	return api.SetUserCustomStatusContextWithUser(context.Background(), "", statusText, statusEmoji, statusExpiration)
@@ -536,7 +536,7 @@ func (api *Client) SetUserCustomStatusWithUser(user, statusText, statusEmoji str
 //
 // For more information see SetUserCustomStatus
 func (api *Client) SetUserCustomStatusContextWithUser(ctx context.Context, user, statusText, statusEmoji string, statusExpiration int64) error {
-	// XXX(theckman): this anonymous struct is for making requests to the Slack
+	// XXX(theckman): this anonymous struct is for making requests to the UIM
 	// API for setting and unsetting a User's Custom Status/Emoji. To change
 	// these values we must provide a JSON document as the profile POST field.
 	//
@@ -545,7 +545,7 @@ func (api *Client) SetUserCustomStatusContextWithUser(ctx context.Context, user,
 	// because an empty string ("") is what's used to unset the values. Check
 	// out the API docs for more details:
 	//
-	// - https://api.slack.com/docs/presence-and-status#custom_status
+	// - https://api.uim.com/docs/presence-and-status#custom_status
 	profile, err := json.Marshal(
 		&struct {
 			StatusText       string `json:"status_text"`
@@ -594,7 +594,7 @@ func (api *Client) GetUserProfile(userID string, includeLabels bool) (*UserProfi
 }
 
 type getUserProfileResponse struct {
-	SlackResponse
+	UimResponse
 	Profile *UserProfile `json:"profile"`
 }
 

@@ -6,27 +6,27 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	attachment := slack.Attachment{
+	attachment := uim.Attachment{
 		Color:         "good",
 		Fallback:      "You successfully posted by Incoming Webhook URL!",
-		AuthorName:    "slack-go/slack",
+		AuthorName:    "uim-go/uim",
 		AuthorSubname: "github.com",
-		AuthorLink:    "https://github.com/slack-go/slack",
+		AuthorLink:    "https://github.com/uim-go/uim",
 		AuthorIcon:    "https://avatars2.githubusercontent.com/u/652790",
-		Text:          "<!channel> All text in Slack uses the same system of escaping: chat messages, direct messages, file comments, etc. :smile:\nSee <https://api.slack.com/docs/message-formatting#linking_to_channels_and_users>",
-		Footer:        "slack api",
-		FooterIcon:    "https://platform.slack-edge.com/img/default_application_icon.png",
+		Text:          "<!channel> All text in UIM uses the same system of escaping: chat messages, direct messages, file comments, etc. :smile:\nSee <https://api.uim.com/docs/message-formatting#linking_to_channels_and_users>",
+		Footer:        "uim api",
+		FooterIcon:    "https://platform.uim-edge.com/img/default_application_icon.png",
 		Ts:            json.Number(strconv.FormatInt(time.Now().Unix(), 10)),
 	}
-	msg := slack.WebhookMessage{
-		Attachments: []slack.Attachment{attachment},
+	msg := uim.WebhookMessage{
+		Attachments: []uim.Attachment{attachment},
 	}
 
-	err := slack.PostWebhook("YOUR_WEBHOOK_URL_HERE", &msg)
+	err := uim.PostWebhook("YOUR_WEBHOOK_URL_HERE", &msg)
 	if err != nil {
 		fmt.Println(err)
 	}

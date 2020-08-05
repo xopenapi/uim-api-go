@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -27,12 +27,12 @@ type DNDStatus struct {
 
 type dndResponseFull struct {
 	DNDStatus
-	SlackResponse
+	UimResponse
 }
 
 type dndTeamInfoResponse struct {
 	Users map[string]DNDStatus `json:"users"`
-	SlackResponse
+	UimResponse
 }
 
 func (api *Client) dndRequest(ctx context.Context, path string, values url.Values) (*dndResponseFull, error) {
@@ -56,7 +56,7 @@ func (api *Client) EndDNDContext(ctx context.Context) error {
 		"token": {api.token},
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 
 	if err := api.postMethod(ctx, "dnd.endDnd", values, response); err != nil {
 		return err

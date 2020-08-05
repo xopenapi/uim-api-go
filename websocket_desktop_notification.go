@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // DesktopNotificationEvent represents the update event for Desktop Notification.
 type DesktopNotificationEvent struct {

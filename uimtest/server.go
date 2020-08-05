@@ -1,4 +1,4 @@
-package slacktest
+package uimtest
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"time"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func newMessageChannels() *messageChannels {
@@ -28,7 +28,7 @@ type Customize interface {
 
 type binder func(Customize)
 
-// NewTestServer returns a slacktest.Server ready to be started
+// NewTestServer returns a uimtest.Server ready to be started
 func NewTestServer(custom ...binder) *Server {
 	serverChans := newMessageChannels()
 
@@ -86,14 +86,14 @@ func (sts *Server) Handle(pattern string, handler http.HandlerFunc) {
 }
 
 // GetChannels returns all the fake channels registered
-func (sts *Server) GetChannels() []slack.Channel {
+func (sts *Server) GetChannels() []uim.Channel {
 	sts.channels.RLock()
 	defer sts.channels.RUnlock()
 	return sts.channels.channels
 }
 
 // GetGroups returns all the fake groups registered
-func (sts *Server) GetGroups() []slack.Group {
+func (sts *Server) GetGroups() []uim.Group {
 	return sts.groups.channels
 }
 
@@ -118,7 +118,7 @@ func (sts *Server) SawOutgoingMessage(msg string) bool {
 	sts.seenOutboundMessages.RLock()
 	defer sts.seenOutboundMessages.RUnlock()
 	for _, m := range sts.seenOutboundMessages.messages {
-		evt := &slack.MessageEvent{}
+		evt := &uim.MessageEvent{}
 		jErr := json.Unmarshal([]byte(m), evt)
 		if jErr != nil {
 			continue
@@ -136,7 +136,7 @@ func (sts *Server) SawMessage(msg string) bool {
 	sts.seenInboundMessages.RLock()
 	defer sts.seenInboundMessages.RUnlock()
 	for _, m := range sts.seenInboundMessages.messages {
-		evt := &slack.MessageEvent{}
+		evt := &uim.MessageEvent{}
 		jErr := json.Unmarshal([]byte(m), evt)
 		if jErr != nil {
 			// This event isn't a message event so we'll skip it
@@ -149,7 +149,7 @@ func (sts *Server) SawMessage(msg string) bool {
 	return false
 }
 
-// GetAPIURL returns the api url you can pass to slack.SLACK_API
+// GetAPIURL returns the api url you can pass to uim.UIM_API
 func (sts *Server) GetAPIURL() string {
 	return "http://" + sts.ServerAddr + "/"
 }
@@ -171,8 +171,8 @@ func (sts *Server) Start() {
 
 // SendMessageToBot sends a message addressed to the Bot
 func (sts *Server) SendMessageToBot(channel, msg string) {
-	m := slack.Message{}
-	m.Type = slack.TYPE_MESSAGE
+	m := uim.Message{}
+	m.Type = uim.TYPE_MESSAGE
 	m.Channel = channel
 	m.User = defaultNonBotUserID
 	m.Text = fmt.Sprintf("<@%s> %s", sts.BotID, msg)
@@ -187,8 +187,8 @@ func (sts *Server) SendMessageToBot(channel, msg string) {
 
 // SendDirectMessageToBot sends a direct message to the bot
 func (sts *Server) SendDirectMessageToBot(msg string) {
-	m := slack.Message{}
-	m.Type = slack.TYPE_MESSAGE
+	m := uim.Message{}
+	m.Type = uim.TYPE_MESSAGE
 	m.Channel = "D024BE91L"
 	m.User = defaultNonBotUserID
 	m.Text = msg
@@ -203,8 +203,8 @@ func (sts *Server) SendDirectMessageToBot(msg string) {
 
 // SendMessageToChannel sends a message to a channel
 func (sts *Server) SendMessageToChannel(channel, msg string) {
-	m := slack.Message{}
-	m.Type = slack.TYPE_MESSAGE
+	m := uim.Message{}
+	m.Type = uim.TYPE_MESSAGE
 	m.Channel = channel
 	m.Text = msg
 	m.User = defaultNonBotUserID
@@ -294,8 +294,8 @@ func (sts *Server) SendBotGroupInvite() {
 }
 
 // GetTestRTMInstance will give you an RTM instance in the context of the current fake server
-func (sts *Server) GetTestRTMInstance() *slack.RTM {
-	api := slack.New("ABCEFG", slack.OptionAPIURL(sts.GetAPIURL()))
+func (sts *Server) GetTestRTMInstance() *uim.RTM {
+	api := uim.New("ABCEFG", uim.OptionAPIURL(sts.GetAPIURL()))
 	rtm := api.NewRTM()
 	return rtm
 }

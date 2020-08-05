@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -182,7 +182,7 @@ var simpleCallback = `{
     },
     "action_ts": "936893340.702759",
     "token": "M1AqUUw3FqayAbqNtsGMch72",
-    "response_url": "https://hooks.slack.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ"
+    "response_url": "https://hooks.uim.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ"
 }`
 
 func unmarshalCallback(j string) (*DialogCallback, error) {
@@ -211,7 +211,7 @@ func assertSimpleCallback(t *testing.T, callback *DialogCallback) {
 	assert.Equal(t, "dreamweaver", callback.User.Name)
 	assert.Equal(t, "936893340.702759", callback.ActionTs)
 	assert.Equal(t, "M1AqUUw3FqayAbqNtsGMch72", callback.Token)
-	assert.Equal(t, "https://hooks.slack.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ", callback.ResponseURL)
+	assert.Equal(t, "https://hooks.uim.com/app/T012AB0A1/123456789/JpmK0yzoZDeRiqfeduTBYXWQ", callback.ResponseURL)
 	assert.Equal(t, "Sigourney Dreamweaver", callback.Submission["name"])
 	assert.Equal(t, "sigdre@example.com", callback.Submission["email"])
 	assert.Equal(t, "+1 800-555-1212", callback.Submission["phone"])
@@ -276,9 +276,9 @@ func assertSimpleSuggestionCallback(t *testing.T, callback *InteractionCallback)
 func openDialogHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 	}{
-		SlackResponse: SlackResponse{Ok: true},
+		UimResponse: UimResponse{Ok: true},
 	})
 	rw.Write(response)
 }

@@ -1,6 +1,6 @@
-// Package slackutilsx is a utility package that doesn't promise API stability.
+// package uimutilsx is a utility package that doesn't promise API stability.
 // its for experimental functionality and utilities.
-package slackutilsx
+package uimutilsx
 
 import (
 	"strings"
@@ -26,7 +26,7 @@ func (t ChannelType) String() string {
 const (
 	// CTypeUnknown represents channels we cannot properly detect.
 	CTypeUnknown ChannelType = iota
-	// CTypeDM is a private channel between two slack users.
+	// CTypeDM is a private channel between two uim users.
 	CTypeDM
 	// CTypeGroup is a group channel.
 	CTypeGroup

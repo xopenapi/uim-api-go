@@ -1,4 +1,4 @@
-package slack
+package uim
 
 const (
 	DEFAULT_HISTORY_LATEST    = ""

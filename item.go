@@ -1,4 +1,4 @@
-package slack
+package uim
 
 const (
 	TYPE_MESSAGE      = "message"
@@ -9,7 +9,7 @@ const (
 	TYPE_GROUP        = "group"
 )
 
-// Item is any type of slack message - message, file, or file comment.
+// Item is any type of uim message - message, file, or file comment.
 type Item struct {
 	Type      string   `json:"type"`
 	Channel   string   `json:"channel,omitempty"`

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/http"
@@ -112,7 +112,7 @@ func getUserGroups(rw http.ResponseWriter, r *http.Request) {
             "date_update": 1446670362,
             "date_delete": 0,
             "auto_type": "admin",
-            "created_by": "USLACKBOT",
+            "created_by": "UIMBOT",
             "updated_by": "U060RNRCZ",
             "deleted_by": null,
             "prefs": {
@@ -166,7 +166,7 @@ func TestGetUserGroups(t *testing.T) {
 		DateUpdate:  1446670362,
 		DateDelete:  0,
 		AutoType:    "admin",
-		CreatedBy:   "USLACKBOT",
+		CreatedBy:   "UIMBOT",
 		UpdatedBy:   "U060RNRCZ",
 		DeletedBy:   "",
 		Prefs: UserGroupPrefs{

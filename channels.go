@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -14,7 +14,7 @@ type channelResponseFull struct {
 	Topic        string    `json:"topic"`
 	NotInChannel bool      `json:"not_in_channel"`
 	History
-	SlackResponse
+	UimResponse
 	Metadata ResponseMetadata `json:"response_metadata"`
 }
 
@@ -57,13 +57,13 @@ func GetChannelsOptionExcludeArchived() GetChannelsOption {
 }
 
 // ArchiveChannel archives the given channel
-// see https://api.slack.com/methods/channels.archive
+// see https://api.uim.com/methods/channels.archive
 func (api *Client) ArchiveChannel(channelID string) error {
 	return api.ArchiveChannelContext(context.Background(), channelID)
 }
 
 // ArchiveChannelContext archives the given channel with a custom context
-// see https://api.slack.com/methods/channels.archive
+// see https://api.uim.com/methods/channels.archive
 func (api *Client) ArchiveChannelContext(ctx context.Context, channelID string) (err error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -75,13 +75,13 @@ func (api *Client) ArchiveChannelContext(ctx context.Context, channelID string) 
 }
 
 // UnarchiveChannel unarchives the given channel
-// see https://api.slack.com/methods/channels.unarchive
+// see https://api.uim.com/methods/channels.unarchive
 func (api *Client) UnarchiveChannel(channelID string) error {
 	return api.UnarchiveChannelContext(context.Background(), channelID)
 }
 
 // UnarchiveChannelContext unarchives the given channel with a custom context
-// see https://api.slack.com/methods/channels.unarchive
+// see https://api.uim.com/methods/channels.unarchive
 func (api *Client) UnarchiveChannelContext(ctx context.Context, channelID string) (err error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -93,13 +93,13 @@ func (api *Client) UnarchiveChannelContext(ctx context.Context, channelID string
 }
 
 // CreateChannel creates a channel with the given name and returns a *Channel
-// see https://api.slack.com/methods/channels.create
+// see https://api.uim.com/methods/channels.create
 func (api *Client) CreateChannel(channelName string) (*Channel, error) {
 	return api.CreateChannelContext(context.Background(), channelName)
 }
 
 // CreateChannelContext creates a channel with the given name and returns a *Channel with a custom context
-// see https://api.slack.com/methods/channels.create
+// see https://api.uim.com/methods/channels.create
 func (api *Client) CreateChannelContext(ctx context.Context, channelName string) (*Channel, error) {
 	values := url.Values{
 		"token": {api.token},
@@ -114,13 +114,13 @@ func (api *Client) CreateChannelContext(ctx context.Context, channelName string)
 }
 
 // GetChannelHistory retrieves the channel history
-// see https://api.slack.com/methods/channels.history
+// see https://api.uim.com/methods/channels.history
 func (api *Client) GetChannelHistory(channelID string, params HistoryParameters) (*History, error) {
 	return api.GetChannelHistoryContext(context.Background(), channelID, params)
 }
 
 // GetChannelHistoryContext retrieves the channel history with a custom context
-// see https://api.slack.com/methods/channels.history
+// see https://api.uim.com/methods/channels.history
 func (api *Client) GetChannelHistoryContext(ctx context.Context, channelID string, params HistoryParameters) (*History, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -159,13 +159,13 @@ func (api *Client) GetChannelHistoryContext(ctx context.Context, channelID strin
 }
 
 // GetChannelInfo retrieves the given channel
-// see https://api.slack.com/methods/channels.info
+// see https://api.uim.com/methods/channels.info
 func (api *Client) GetChannelInfo(channelID string) (*Channel, error) {
 	return api.GetChannelInfoContext(context.Background(), channelID)
 }
 
 // GetChannelInfoContext retrieves the given channel with a custom context
-// see https://api.slack.com/methods/channels.info
+// see https://api.uim.com/methods/channels.info
 func (api *Client) GetChannelInfoContext(ctx context.Context, channelID string) (*Channel, error) {
 	values := url.Values{
 		"token":          {api.token},
@@ -181,13 +181,13 @@ func (api *Client) GetChannelInfoContext(ctx context.Context, channelID string) 
 }
 
 // InviteUserToChannel invites a user to a given channel and returns a *Channel
-// see https://api.slack.com/methods/channels.invite
+// see https://api.uim.com/methods/channels.invite
 func (api *Client) InviteUserToChannel(channelID, user string) (*Channel, error) {
 	return api.InviteUserToChannelContext(context.Background(), channelID, user)
 }
 
 // InviteUserToChannelContext invites a user to a given channel and returns a *Channel with a custom context
-// see https://api.slack.com/methods/channels.invite
+// see https://api.uim.com/methods/channels.invite
 func (api *Client) InviteUserToChannelContext(ctx context.Context, channelID, user string) (*Channel, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -203,13 +203,13 @@ func (api *Client) InviteUserToChannelContext(ctx context.Context, channelID, us
 }
 
 // JoinChannel joins the currently authenticated user to a channel
-// see https://api.slack.com/methods/channels.join
+// see https://api.uim.com/methods/channels.join
 func (api *Client) JoinChannel(channelName string) (*Channel, error) {
 	return api.JoinChannelContext(context.Background(), channelName)
 }
 
 // JoinChannelContext joins the currently authenticated user to a channel with a custom context
-// see https://api.slack.com/methods/channels.join
+// see https://api.uim.com/methods/channels.join
 func (api *Client) JoinChannelContext(ctx context.Context, channelName string) (*Channel, error) {
 	values := url.Values{
 		"token": {api.token},
@@ -224,13 +224,13 @@ func (api *Client) JoinChannelContext(ctx context.Context, channelName string) (
 }
 
 // LeaveChannel makes the authenticated user leave the given channel
-// see https://api.slack.com/methods/channels.leave
+// see https://api.uim.com/methods/channels.leave
 func (api *Client) LeaveChannel(channelID string) (bool, error) {
 	return api.LeaveChannelContext(context.Background(), channelID)
 }
 
 // LeaveChannelContext makes the authenticated user leave the given channel with a custom context
-// see https://api.slack.com/methods/channels.leave
+// see https://api.uim.com/methods/channels.leave
 func (api *Client) LeaveChannelContext(ctx context.Context, channelID string) (bool, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -246,13 +246,13 @@ func (api *Client) LeaveChannelContext(ctx context.Context, channelID string) (b
 }
 
 // KickUserFromChannel kicks a user from a given channel
-// see https://api.slack.com/methods/channels.kick
+// see https://api.uim.com/methods/channels.kick
 func (api *Client) KickUserFromChannel(channelID, user string) error {
 	return api.KickUserFromChannelContext(context.Background(), channelID, user)
 }
 
 // KickUserFromChannelContext kicks a user from a given channel with a custom context
-// see https://api.slack.com/methods/channels.kick
+// see https://api.uim.com/methods/channels.kick
 func (api *Client) KickUserFromChannelContext(ctx context.Context, channelID, user string) (err error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -267,7 +267,7 @@ func (api *Client) KickUserFromChannelContext(ctx context.Context, channelID, us
 func newChannelPagination(c *Client, options ...GetChannelsOption) (cp ChannelPagination) {
 	cp = ChannelPagination{
 		c:     c,
-		limit: 200, // per slack api documentation.
+		limit: 200, // per uim api documentation.
 	}
 
 	for _, opt := range options {
@@ -337,13 +337,13 @@ func (api *Client) GetChannelsPaginated(options ...GetChannelsOption) ChannelPag
 }
 
 // GetChannels retrieves all the channels
-// see https://api.slack.com/methods/channels.list
+// see https://api.uim.com/methods/channels.list
 func (api *Client) GetChannels(excludeArchived bool, options ...GetChannelsOption) ([]Channel, error) {
 	return api.GetChannelsContext(context.Background(), excludeArchived, options...)
 }
 
 // GetChannelsContext retrieves all the channels with a custom context
-// see https://api.slack.com/methods/channels.list
+// see https://api.uim.com/methods/channels.list
 func (api *Client) GetChannelsContext(ctx context.Context, excludeArchived bool, options ...GetChannelsOption) (results []Channel, err error) {
 	if excludeArchived {
 		options = append(options, GetChannelsOptionExcludeArchived())
@@ -372,14 +372,14 @@ func (api *Client) GetChannelsContext(ctx context.Context, excludeArchived bool,
 // timer before making the call. In this way, any further updates needed during the timeout will not generate extra calls
 // (just one per channel). This is useful for when reading scroll-back history, or following a busy live channel. A
 // timeout of 5 seconds is a good starting point. Be sure to flush these calls on shutdown/logout.
-// see https://api.slack.com/methods/channels.mark
+// see https://api.uim.com/methods/channels.mark
 func (api *Client) SetChannelReadMark(channelID, ts string) error {
 	return api.SetChannelReadMarkContext(context.Background(), channelID, ts)
 }
 
 // SetChannelReadMarkContext sets the read mark of a given channel to a specific point with a custom context
 // For more details see SetChannelReadMark documentation
-// see https://api.slack.com/methods/channels.mark
+// see https://api.uim.com/methods/channels.mark
 func (api *Client) SetChannelReadMarkContext(ctx context.Context, channelID, ts string) (err error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -392,13 +392,13 @@ func (api *Client) SetChannelReadMarkContext(ctx context.Context, channelID, ts 
 }
 
 // RenameChannel renames a given channel
-// see https://api.slack.com/methods/channels.rename
+// see https://api.uim.com/methods/channels.rename
 func (api *Client) RenameChannel(channelID, name string) (*Channel, error) {
 	return api.RenameChannelContext(context.Background(), channelID, name)
 }
 
 // RenameChannelContext renames a given channel with a custom context
-// see https://api.slack.com/methods/channels.rename
+// see https://api.uim.com/methods/channels.rename
 func (api *Client) RenameChannelContext(ctx context.Context, channelID, name string) (*Channel, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -416,13 +416,13 @@ func (api *Client) RenameChannelContext(ctx context.Context, channelID, name str
 }
 
 // SetChannelPurpose sets the channel purpose and returns the purpose that was successfully set
-// see https://api.slack.com/methods/channels.setPurpose
+// see https://api.uim.com/methods/channels.setPurpose
 func (api *Client) SetChannelPurpose(channelID, purpose string) (string, error) {
 	return api.SetChannelPurposeContext(context.Background(), channelID, purpose)
 }
 
 // SetChannelPurposeContext sets the channel purpose and returns the purpose that was successfully set with a custom context
-// see https://api.slack.com/methods/channels.setPurpose
+// see https://api.uim.com/methods/channels.setPurpose
 func (api *Client) SetChannelPurposeContext(ctx context.Context, channelID, purpose string) (string, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -438,13 +438,13 @@ func (api *Client) SetChannelPurposeContext(ctx context.Context, channelID, purp
 }
 
 // SetChannelTopic sets the channel topic and returns the topic that was successfully set
-// see https://api.slack.com/methods/channels.setTopic
+// see https://api.uim.com/methods/channels.setTopic
 func (api *Client) SetChannelTopic(channelID, topic string) (string, error) {
 	return api.SetChannelTopicContext(context.Background(), channelID, topic)
 }
 
 // SetChannelTopicContext sets the channel topic and returns the topic that was successfully set with a custom context
-// see https://api.slack.com/methods/channels.setTopic
+// see https://api.uim.com/methods/channels.setTopic
 func (api *Client) SetChannelTopicContext(ctx context.Context, channelID, topic string) (string, error) {
 	values := url.Values{
 		"token":   {api.token},
@@ -460,13 +460,13 @@ func (api *Client) SetChannelTopicContext(ctx context.Context, channelID, topic 
 }
 
 // GetChannelReplies gets an entire thread (a message plus all the messages in reply to it).
-// see https://api.slack.com/methods/channels.replies
+// see https://api.uim.com/methods/channels.replies
 func (api *Client) GetChannelReplies(channelID, thread_ts string) ([]Message, error) {
 	return api.GetChannelRepliesContext(context.Background(), channelID, thread_ts)
 }
 
 // GetChannelRepliesContext gets an entire thread (a message plus all the messages in reply to it) with a custom context
-// see https://api.slack.com/methods/channels.replies
+// see https://api.uim.com/methods/channels.replies
 func (api *Client) GetChannelRepliesContext(ctx context.Context, channelID, thread_ts string) ([]Message, error) {
 	values := url.Values{
 		"token":     {api.token},

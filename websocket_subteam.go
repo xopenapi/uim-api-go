@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // SubteamCreatedEvent represents the Subteam created event
 type SubteamCreatedEvent struct {

@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // @NOTE: Blocks are in beta and subject to change.
 
-// More Information: https://api.slack.com/block-kit
+// More Information: https://api.uim.com/block-kit
 
 // MessageBlockType defines a named string type to define each block type
 // as a constant for use within the package.
@@ -25,7 +25,7 @@ type Block interface {
 }
 
 // Blocks is a convenience struct defined to allow dynamic unmarshalling of
-// the "blocks" value in Slack's JSON response, which varies depending on block type
+// the "blocks" value in UIM's JSON response, which varies depending on block type
 type Blocks struct {
 	BlockSet []Block `json:"blocks,omitempty"`
 }

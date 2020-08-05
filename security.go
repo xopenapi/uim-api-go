@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"crypto/hmac"
@@ -14,11 +14,11 @@ import (
 
 // Signature headers
 const (
-	hSignature = "X-Slack-Signature"
-	hTimestamp = "X-Slack-Request-Timestamp"
+	hSignature = "X-UIM-Signature"
+	hTimestamp = "X-UIM-Request-Timestamp"
 )
 
-// SecretsVerifier contains the information needed to verify that the request comes from Slack
+// SecretsVerifier contains the information needed to verify that the request comes from UIM
 type SecretsVerifier struct {
 	signature []byte
 	hmac      hash.Hash
@@ -79,7 +79,7 @@ func (v *SecretsVerifier) Write(body []byte) (n int, err error) {
 	return v.hmac.Write(body)
 }
 
-// Ensure compares the signature sent from Slack with the actual computed hash to judge validity
+// Ensure compares the signature sent from UIM with the actual computed hash to judge validity
 func (v SecretsVerifier) Ensure() error {
 	computed := v.hmac.Sum(nil)
 	// use hmac.Equal prevent leaking timing information.

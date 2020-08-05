@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
@@ -13,14 +13,14 @@ func main() {
 		debug    bool
 	)
 
-	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your Slack API Token")
+	flag.StringVar(&apiToken, "token", "YOUR_TOKEN_HERE", "Your UIM API Token")
 	flag.BoolVar(&debug, "debug", false, "Show JSON output")
 	flag.Parse()
 
-	api := slack.New(apiToken, slack.OptionDebug(debug))
+	api := uim.New(apiToken, uim.OptionDebug(debug))
 
 	// Get all stars for the usr.
-	params := slack.NewStarsParameters()
+	params := uim.NewStarsParameters()
 	starredItems, _, err := api.GetStarred(params)
 	if err != nil {
 		fmt.Printf("Error getting stars: %s\n", err)
@@ -29,13 +29,13 @@ func main() {
 	for _, s := range starredItems {
 		var desc string
 		switch s.Type {
-		case slack.TYPE_MESSAGE:
+		case uim.TYPE_MESSAGE:
 			desc = s.Message.Text
-		case slack.TYPE_FILE:
+		case uim.TYPE_FILE:
 			desc = s.File.Name
-		case slack.TYPE_FILE_COMMENT:
+		case uim.TYPE_FILE_COMMENT:
 			desc = s.File.Name + " - " + s.Comment.Comment
-		case slack.TYPE_CHANNEL, slack.TYPE_IM, slack.TYPE_GROUP:
+		case uim.TYPE_CHANNEL, uim.TYPE_IM, uim.TYPE_GROUP:
 			desc = s.Channel
 		}
 		fmt.Printf("Starred %s: %s\n", s.Type, desc)

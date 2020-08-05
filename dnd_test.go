@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestSlack_EndDND(t *testing.T) {
+func TestUIM_EndDND(t *testing.T) {
 	http.HandleFunc("/dnd.endDnd", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{ "ok": true }`))
@@ -19,7 +19,7 @@ func TestSlack_EndDND(t *testing.T) {
 	}
 }
 
-func TestSlack_EndSnooze(t *testing.T) {
+func TestUIM_EndSnooze(t *testing.T) {
 	http.HandleFunc("/dnd.endSnooze", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{ "ok": true,
@@ -46,7 +46,7 @@ func TestSlack_EndSnooze(t *testing.T) {
 	}
 }
 
-func TestSlack_GetDNDInfo(t *testing.T) {
+func TestUIM_GetDNDInfo(t *testing.T) {
 	http.HandleFunc("/dnd.info", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{
@@ -81,7 +81,7 @@ func TestSlack_GetDNDInfo(t *testing.T) {
 	}
 }
 
-func TestSlack_GetDNDTeamInfo(t *testing.T) {
+func TestUIM_GetDNDTeamInfo(t *testing.T) {
 	http.HandleFunc("/dnd.teamInfo", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{
@@ -124,7 +124,7 @@ func TestSlack_GetDNDTeamInfo(t *testing.T) {
 	}
 }
 
-func TestSlack_SetSnooze(t *testing.T) {
+func TestUIM_SetSnooze(t *testing.T) {
 	http.HandleFunc("/dnd.setSnooze", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{

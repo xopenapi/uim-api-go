@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 
 func TestNewImageBlockElement(t *testing.T) {
 
-	imageElement := NewImageBlockElement("https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png", "Location Pin Icon")
+	imageElement := NewImageBlockElement("https://api.uim.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png", "Location Pin Icon")
 
 	assert.Equal(t, string(imageElement.Type), "image")
 	assert.Contains(t, imageElement.ImageURL, "tripAgentLocationMarker")

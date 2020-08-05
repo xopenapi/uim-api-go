@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // Paging contains paging information
 type Paging struct {

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -110,7 +110,7 @@ type ShareFileInfo struct {
 // There are three ways to upload a file. You can either set Content if file is small, set Reader if file is large,
 // or provide a local file path in File to upload it from your filesystem.
 //
-// Note that when using the Reader option, you *must* specify the Filename, otherwise the Slack API isn't happy.
+// Note that when using the Reader option, you *must* specify the Filename, otherwise the UIM API isn't happy.
 type FileUploadParameters struct {
 	File            string
 	Content         string
@@ -150,7 +150,7 @@ type fileResponseFull struct {
 	Files    []File           `json:"files"`
 	Metadata ResponseMetadata `json:"response_metadata"`
 
-	SlackResponse
+	UimResponse
 }
 
 // NewGetFilesParameters provides an instance of GetFilesParameters with all the sane default values set

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -18,7 +18,7 @@ type Bot struct {
 
 type botResponseFull struct {
 	Bot `json:"bot,omitempty"` // GetBotInfo
-	SlackResponse
+	UimResponse
 }
 
 func (api *Client) botRequest(ctx context.Context, path string, values url.Values) (*botResponseFull, error) {

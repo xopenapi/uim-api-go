@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"bytes"
@@ -41,11 +41,11 @@ func getTestUserProfile() UserProfile {
 		DisplayName:           "Test Display Name",
 		DisplayNameNormalized: "Test Display Name Normalized",
 		Email:                 "test@test.com",
-		Image24:               "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_24.jpg",
-		Image32:               "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_32.jpg",
-		Image48:               "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_48.jpg",
-		Image72:               "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_72.jpg",
-		Image192:              "https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_192.jpg",
+		Image24:               "https://s3-us-west-2.amazonaws.com/uim-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_24.jpg",
+		Image32:               "https://s3-us-west-2.amazonaws.com/uim-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_32.jpg",
+		Image48:               "https://s3-us-west-2.amazonaws.com/uim-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_48.jpg",
+		Image72:               "https://s3-us-west-2.amazonaws.com/uim-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_72.jpg",
+		Image192:              "https://s3-us-west-2.amazonaws.com/uim-files2/avatars/2016-10-18/92962080834_ef14c1469fc0741caea1_192.jpg",
 		Fields:                getTestUserProfileCustomFields(),
 	}
 }
@@ -91,25 +91,25 @@ func getUserIdentity(rw http.ResponseWriter, r *http.Request) {
     "id": "UXXXXXXXX",
     "name": "Test User",
     "email": "test@test.com",
-    "image_24": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_24.jpg",
-    "image_32": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_32.jpg",
-    "image_48": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_48.jpg",
-    "image_72": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_72.jpg",
-    "image_192": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_192.jpg",
-    "image_512": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_512.jpg"
+    "image_24": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_24.jpg",
+    "image_32": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_32.jpg",
+    "image_48": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_48.jpg",
+    "image_72": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_72.jpg",
+    "image_192": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_192.jpg",
+    "image_512": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_512.jpg"
   },
   "team": {
     "id": "TXXXXXXXX",
     "name": "team-name",
     "domain": "team-domain",
-    "image_34": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_34.jpg",
-    "image_44": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_44.jpg",
-    "image_68": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_68.jpg",
-    "image_88": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_88.jpg",
-    "image_102": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_102.jpg",
-    "image_132": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_132.jpg",
-    "image_230": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_230.jpg",
-    "image_original": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_original.jpg"
+    "image_34": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_34.jpg",
+    "image_44": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_44.jpg",
+    "image_68": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_68.jpg",
+    "image_88": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_88.jpg",
+    "image_102": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_102.jpg",
+    "image_132": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_132.jpg",
+    "image_230": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_230.jpg",
+    "image_original": "https:\/\/s3-us-west-2.amazonaws.com\/uim-files2\/avatars\/2016-10-18\/92962080834_ef14c1469fc0741caea1_original.jpg"
   }
 }`)
 	rw.Write(response)
@@ -160,7 +160,7 @@ func httpTestErrReply(w http.ResponseWriter, clientErr bool, msg string) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	body, _ := json.Marshal(&SlackResponse{
+	body, _ := json.Marshal(&UimResponse{
 		Ok: false, Error: msg,
 	})
 
@@ -405,7 +405,7 @@ func getUserPage(max int64) func(rw http.ResponseWriter, r *http.Request) {
 	var n int64
 	return func(rw http.ResponseWriter, r *http.Request) {
 		var cpage int64
-		sresp := SlackResponse{
+		sresp := UimResponse{
 			Ok: true,
 		}
 		members := []User{
@@ -414,14 +414,14 @@ func getUserPage(max int64) func(rw http.ResponseWriter, r *http.Request) {
 		rw.Header().Set("Content-Type", "application/json")
 		if cpage = atomic.AddInt64(&n, 1); cpage == max {
 			response, _ := json.Marshal(userResponseFull{
-				SlackResponse: sresp,
+				UimResponse: sresp,
 				Members:       members,
 			})
 			rw.Write(response)
 			return
 		}
 		response, _ := json.Marshal(userResponseFull{
-			SlackResponse: sresp,
+			UimResponse: sresp,
 			Members:       members,
 			Metadata:      ResponseMetadata{Cursor: strconv.Itoa(int(cpage))},
 		})
@@ -443,7 +443,7 @@ func getUserPagesWithRateLimitErrors(max int64) func(rw http.ResponseWriter, r *
 			return
 		}
 		var cpage int64
-		sresp := SlackResponse{
+		sresp := UimResponse{
 			Ok: true,
 		}
 		members := []User{
@@ -452,14 +452,14 @@ func getUserPagesWithRateLimitErrors(max int64) func(rw http.ResponseWriter, r *
 		rw.Header().Set("Content-Type", "application/json")
 		if cpage = atomic.AddInt64(&n, 1); cpage == max {
 			response, _ := json.Marshal(userResponseFull{
-				SlackResponse: sresp,
+				UimResponse: sresp,
 				Members:       members,
 			})
 			rw.Write(response)
 			return
 		}
 		response, _ := json.Marshal(userResponseFull{
-			SlackResponse: sresp,
+			UimResponse: sresp,
 			Members:       members,
 			Metadata:      ResponseMetadata{Cursor: strconv.Itoa(int(cpage))},
 		})
@@ -574,7 +574,7 @@ func getUserProfileHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	profile := getTestUserProfile()
 	resp, _ := json.Marshal(&getUserProfileResponse{
-		SlackResponse: SlackResponse{Ok: true},
+		UimResponse: UimResponse{Ok: true},
 		Profile:       &profile})
 	rw.Write(resp)
 }
@@ -711,7 +711,7 @@ func TestGetUsersReturnsServerError(t *testing.T) {
 		return
 	}
 
-	expectedErr := "slack server error: 500 Internal Server Error"
+	expectedErr := "uim server error: 500 Internal Server Error"
 	if err.Error() != expectedErr {
 		t.Errorf("Expected: %s. Got: %s", expectedErr, err.Error())
 	}

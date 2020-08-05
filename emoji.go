@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 
 type emojiResponseFull struct {
 	Emoji map[string]string `json:"emoji"`
-	SlackResponse
+	UimResponse
 }
 
 // GetEmoji retrieves all the emojis

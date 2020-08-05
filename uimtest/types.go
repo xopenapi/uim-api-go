@@ -1,4 +1,4 @@
-package slacktest
+package uimtest
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"sync"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 type contextKey string
@@ -42,7 +42,7 @@ type hub struct {
 type messageChannels struct {
 	seen   chan (string)
 	sent   chan (string)
-	posted chan (slack.Message)
+	posted chan (uim.Message)
 }
 type messageCollection struct {
 	sync.RWMutex
@@ -51,15 +51,15 @@ type messageCollection struct {
 
 type serverChannels struct {
 	sync.RWMutex
-	channels []slack.Channel
+	channels []uim.Channel
 }
 
 type serverGroups struct {
 	sync.RWMutex
-	channels []slack.Group
+	channels []uim.Group
 }
 
-// Server represents a Slack Test server
+// Server represents a UIM Test server
 type Server struct {
 	registered           map[string]struct{}
 	server               *httptest.Server
@@ -75,7 +75,7 @@ type Server struct {
 	seenOutboundMessages *messageCollection
 }
 
-type fullInfoSlackResponse struct {
-	slack.Info
-	slack.SlackResponse
+type fullInfoUimResponse struct {
+	uim.Info
+	uim.UimResponse
 }

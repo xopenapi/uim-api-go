@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -37,7 +37,7 @@ type userGroupResponseFull struct {
 	UserGroups []UserGroup `json:"usergroups"`
 	UserGroup  UserGroup   `json:"usergroup"`
 	Users      []string    `json:"users"`
-	SlackResponse
+	UimResponse
 }
 
 func (api *Client) userGroupRequest(ctx context.Context, path string, values url.Values) (*userGroupResponseFull, error) {

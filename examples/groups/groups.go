@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New("YOUR_TOKEN_HERE")
+	api := uim.New("YOUR_TOKEN_HERE")
 	// If you set debugging, it will log all requests to the console
 	// Useful when encountering issues
 	// api.SetDebug(true)

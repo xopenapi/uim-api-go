@@ -1,11 +1,11 @@
-package slackevents
+package uimevents
 
 import (
 	"encoding/json"
 	"fmt"
 	"testing"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func TestParserOuterCallBackEvent(t *testing.T) {
@@ -34,7 +34,7 @@ func TestParserOuterCallBackEvent(t *testing.T) {
 	case *EventsAPICallbackEvent:
 		{
 		}
-	case *slack.UnmarshallingErrorEvent:
+	case *uim.UnmarshallingErrorEvent:
 		{
 			fmt.Println("Unmarshalling Error!")
 			fmt.Println(ev)

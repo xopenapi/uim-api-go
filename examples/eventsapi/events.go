@@ -6,26 +6,26 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/slack-go/slack"
-	"github.com/slack-go/slack/slackevents"
+	"github.com/uim-go/uim"
+	"github.com/uim-go/uim/uimevents"
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"
-var api = slack.New("TOKEN")
+var api = uim.New("TOKEN")
 
 func main() {
 	http.HandleFunc("/events-endpoint", func(w http.ResponseWriter, r *http.Request) {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
 		body := buf.String()
-		eventsAPIEvent, e := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: "TOKEN"}))
+		eventsAPIEvent, e := uimevents.ParseEvent(json.RawMessage(body), uimevents.OptionVerifyToken(&uimevents.TokenComparator{VerificationToken: "TOKEN"}))
 		if e != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		if eventsAPIEvent.Type == slackevents.URLVerification {
-			var r *slackevents.ChallengeResponse
+		if eventsAPIEvent.Type == uimevents.URLVerification {
+			var r *uimevents.ChallengeResponse
 			err := json.Unmarshal([]byte(body), &r)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -33,11 +33,11 @@ func main() {
 			w.Header().Set("Content-Type", "text")
 			w.Write([]byte(r.Challenge))
 		}
-		if eventsAPIEvent.Type == slackevents.CallbackEvent {
+		if eventsAPIEvent.Type == uimevents.CallbackEvent {
 			innerEvent := eventsAPIEvent.InnerEvent
 			switch ev := innerEvent.Data.(type) {
-			case *slackevents.AppMentionEvent:
-				api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			case *uimevents.AppMentionEvent:
+				api.PostMessage(ev.Channel, uim.MsgOptionText("Yes, hello.", false))
 			}
 		}
 	})

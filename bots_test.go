@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/http"
@@ -15,9 +15,9 @@ func getBotInfo(rw http.ResponseWriter, r *http.Request) {
 			"app_id":"A161CLERW",
 			"user_id": "U012ABCDEF",
 			"icons": {
-              "image_36":"https:\/\/a.slack-edge.com\/2fac\/plugins\/github\/assets\/service_36.png",
-              "image_48":"https:\/\/a.slack-edge.com\/2fac\/plugins\/github\/assets\/service_48.png",
-              "image_72":"https:\/\/a.slack-edge.com\/2fac\/plugins\/github\/assets\/service_72.png"
+              "image_36":"https:\/\/a.uim-edge.com\/2fac\/plugins\/github\/assets\/service_36.png",
+              "image_48":"https:\/\/a.uim-edge.com\/2fac\/plugins\/github\/assets\/service_48.png",
+              "image_72":"https:\/\/a.uim-edge.com\/2fac\/plugins\/github\/assets\/service_72.png"
             }
         }}`)
 	rw.Write(response)

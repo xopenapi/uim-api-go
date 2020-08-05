@@ -1,9 +1,9 @@
-package slacktest
+package uimtest
 
 import (
 	"testing"
 
-	slack "github.com/slack-go/slack"
+	uim "github.com/uim-go/uim"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -11,7 +11,7 @@ func TestAuthTestHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	user, err := client.AuthTest()
 	assert.NoError(t, err, "should not error out")
 	assert.Equal(t, defaultTeamName, user.Team, "user ID should be correct")
@@ -24,8 +24,8 @@ func TestPostMessageHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
-	channel, tstamp, err := client.PostMessage("foo", slack.MsgOptionText("some text", false), slack.MsgOptionPostMessageParameters(slack.PostMessageParameters{}))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
+	channel, tstamp, err := client.PostMessage("foo", uim.MsgOptionText("some text", false), uim.MsgOptionPostMessageParameters(uim.PostMessageParameters{}))
 	assert.NoError(t, err, "should not error out")
 	assert.Equal(t, "foo", channel, "channel should be correct")
 	assert.NotEmpty(t, tstamp, "timestamp should not be empty")
@@ -35,7 +35,7 @@ func TestServerListChannels(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	channels, err := client.GetChannels(true)
 	assert.NoError(t, err)
 	assert.Len(t, channels, 2)
@@ -50,7 +50,7 @@ func TestUserInfoHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	user, err := client.GetUserInfo("123456")
 	assert.NoError(t, err)
 	assert.Equal(t, "W012A3CDE", user.ID)
@@ -62,7 +62,7 @@ func TestBotInfoHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	bot, err := client.GetBotInfo(s.BotID)
 	assert.NoError(t, err)
 	assert.Equal(t, s.BotID, bot.ID)
@@ -74,7 +74,7 @@ func TestListGroupsHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	groups, err := client.GetGroups(true)
 	assert.NoError(t, err)
 	if !assert.Len(t, groups, 1, "should have one group") {
@@ -90,7 +90,7 @@ func TestListChannelsHandler(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	client := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	client := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	channels, err := client.GetChannels(true)
 	assert.NoError(t, err)
 	if !assert.Len(t, channels, 2, "should have two channels") {

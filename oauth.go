@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -28,7 +28,7 @@ type OAuthResponse struct {
 	IncomingWebhook OAuthResponseIncomingWebhook `json:"incoming_webhook"`
 	Bot             OAuthResponseBot             `json:"bot"`
 	UserID          string                       `json:"user_id,omitempty"`
-	SlackResponse
+	UimResponse
 }
 
 // OAuthV2Response ...
@@ -41,7 +41,7 @@ type OAuthV2Response struct {
 	Team        OAuthV2ResponseTeam       `json:"team"`
 	Enterprise  OAuthV2ResponseEnterprise `json:"enterprise"`
 	AuthedUser  OAuthV2ResponseAuthedUser `json:"authed_user"`
-	SlackResponse
+	UimResponse
 }
 
 // OAuthV2ResponseTeam ...
@@ -78,7 +78,7 @@ func GetOAuthTokenContext(ctx context.Context, client httpClient, clientID, clie
 	return response.AccessToken, response.Scope, nil
 }
 
-// GetBotOAuthToken retrieves top-level and bot AccessToken - https://api.slack.com/legacy/oauth#bot_user_access_tokens
+// GetBotOAuthToken retrieves top-level and bot AccessToken - https://api.uim.com/legacy/oauth#bot_user_access_tokens
 func GetBotOAuthToken(client httpClient, clientID, clientSecret, code, redirectURI string) (accessToken string, scope string, bot OAuthResponseBot, err error) {
 	return GetBotOAuthTokenContext(context.Background(), client, clientID, clientSecret, code, redirectURI)
 }
@@ -112,7 +112,7 @@ func GetOAuthResponseContext(ctx context.Context, client httpClient, clientID, c
 	return response, response.Err()
 }
 
-// GetOAuthV2Response gets a V2 OAuth access token response - https://api.slack.com/methods/oauth.v2.access
+// GetOAuthV2Response gets a V2 OAuth access token response - https://api.uim.com/methods/oauth.v2.access
 func GetOAuthV2Response(client httpClient, clientID, clientSecret, code, redirectURI string) (resp *OAuthV2Response, err error) {
 	return GetOAuthV2ResponseContext(context.Background(), client, clientID, clientSecret, code, redirectURI)
 }

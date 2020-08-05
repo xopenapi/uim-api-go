@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -83,7 +83,7 @@ func TestEditedMessage(t *testing.T) {
 var uploadedFile = `{
     "type": "message",
     "subtype": "file_share",
-    "text": "<@U2147483697|tester> uploaded a file: <https:\/\/test.slack.com\/files\/tester\/abc\/test.txt|test.txt> and commented: test comment here",
+    "text": "<@U2147483697|tester> uploaded a file: <https:\/\/test.uim.com\/files\/tester\/abc\/test.txt|test.txt> and commented: test comment here",
     "files": [{
         "id": "abc",
         "created": 1433314757,
@@ -101,13 +101,13 @@ var uploadedFile = `{
         "external_type": "",
         "is_public": true,
         "public_url_shared": false,
-        "url": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/test.txt",
-        "url_download": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/download\/test.txt",
-        "url_private": "https:\/\/files.slack.com\/files-pri\/abc-def\/test.txt",
-        "url_private_download": "https:\/\/files.slack.com\/files-pri\/abc-def\/download\/test.txt",
-        "permalink": "https:\/\/test.slack.com\/files\/tester\/abc\/test.txt",
-        "permalink_public": "https:\/\/slack-files.com\/abc-def-ghi",
-        "edit_link": "https:\/\/test.slack.com\/files\/tester\/abc\/test.txt\/edit",
+        "url": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/test.txt",
+        "url_download": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/download\/test.txt",
+        "url_private": "https:\/\/files.uim.com\/files-pri\/abc-def\/test.txt",
+        "url_private_download": "https:\/\/files.uim.com\/files-pri\/abc-def\/download\/test.txt",
+        "permalink": "https:\/\/test.uim.com\/files\/tester\/abc\/test.txt",
+        "permalink_public": "https:\/\/uim-files.com\/abc-def-ghi",
+        "edit_link": "https:\/\/test.uim.com\/files\/tester\/abc\/test.txt\/edit",
         "preview": "test\n",
         "preview_highlight": "<div class=\"sssh-code\"><div class=\"sssh-line\"><pre>test<\/pre><\/div>\n<div class=\"sssh-line\"><pre><\/pre><\/div>\n<\/div>",
         "lines": 2,
@@ -137,7 +137,7 @@ func TestUploadedFile(t *testing.T) {
 	assert.NotNil(t, message)
 	assert.Equal(t, "message", message.Type)
 	assert.Equal(t, "file_share", message.SubType)
-	assert.Equal(t, "<@U2147483697|tester> uploaded a file: <https://test.slack.com/files/tester/abc/test.txt|test.txt> and commented: test comment here", message.Text)
+	assert.Equal(t, "<@U2147483697|tester> uploaded a file: <https://test.uim.com/files/tester/abc/test.txt|test.txt> and commented: test comment here", message.Text)
 	// TODO: Assert File
 	assert.Equal(t, "U2147483697", message.User)
 	assert.True(t, message.Upload)
@@ -147,7 +147,7 @@ func TestUploadedFile(t *testing.T) {
 var testPost = `{
     "type": "message",
     "subtype": "file_share",
-    "text": "<@U2147483697|tester> shared a file: <https:\/\/test.slack.com\/files\/tester\/abc\/test_post|test post>",
+    "text": "<@U2147483697|tester> shared a file: <https:\/\/test.uim.com\/files\/tester\/abc\/test_post|test post>",
     "files": [{
         "id": "abc",
         "created": 1433315398,
@@ -165,13 +165,13 @@ var testPost = `{
         "external_type": "",
         "is_public": true,
         "public_url_shared": false,
-        "url": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/test_post",
-        "url_download": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/download\/test_post",
-        "url_private": "https:\/\/files.slack.com\/files-pri\/abc-def\/test_post",
-        "url_private_download": "https:\/\/files.slack.com\/files-pri\/abc-def\/download\/test_post",
-        "permalink": "https:\/\/test.slack.com\/files\/tester\/abc\/test_post",
-        "permalink_public": "https:\/\/slack-files.com\/abc-def-ghi",
-        "edit_link": "https:\/\/test.slack.com\/files\/tester\/abc\/test_post\/edit",
+        "url": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/test_post",
+        "url_download": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/download\/test_post",
+        "url_private": "https:\/\/files.uim.com\/files-pri\/abc-def\/test_post",
+        "url_private_download": "https:\/\/files.uim.com\/files-pri\/abc-def\/download\/test_post",
+        "permalink": "https:\/\/test.uim.com\/files\/tester\/abc\/test_post",
+        "permalink_public": "https:\/\/uim-files.com\/abc-def-ghi",
+        "edit_link": "https:\/\/test.uim.com\/files\/tester\/abc\/test_post\/edit",
         "preview": "test post body",
         "channels": [
             "C2147483705"
@@ -191,7 +191,7 @@ func TestPost(t *testing.T) {
 	assert.NotNil(t, message)
 	assert.Equal(t, "message", message.Type)
 	assert.Equal(t, "file_share", message.SubType)
-	assert.Equal(t, "<@U2147483697|tester> shared a file: <https://test.slack.com/files/tester/abc/test_post|test post>", message.Text)
+	assert.Equal(t, "<@U2147483697|tester> shared a file: <https://test.uim.com/files/tester/abc/test_post|test post>", message.Text)
 	// TODO: Assert File
 	assert.Equal(t, "U2147483697", message.User)
 	assert.False(t, message.Upload)
@@ -201,7 +201,7 @@ func TestPost(t *testing.T) {
 var testComment = `{
     "type": "message",
     "subtype": "file_comment",
-    "text": "<@U2147483697|tester> commented on <@U2147483697|tester>'s file <https:\/\/test.slack.com\/files\/tester\/abc\/test_post|test post>: another comment",
+    "text": "<@U2147483697|tester> commented on <@U2147483697|tester>'s file <https:\/\/test.uim.com\/files\/tester\/abc\/test_post|test post>: another comment",
     "files": [{
         "id": "abc",
         "created": 1433315398,
@@ -219,13 +219,13 @@ var testComment = `{
         "external_type": "",
         "is_public": true,
         "public_url_shared": false,
-        "url": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/test_post",
-        "url_download": "https:\/\/slack-files.com\/files-pub\/abc-def-ghi\/download\/test_post",
-        "url_private": "https:\/\/files.slack.com\/files-pri\/abc-def\/test_post",
-        "url_private_download": "https:\/\/files.slack.com\/files-pri\/abc-def\/download\/test_post",
-        "permalink": "https:\/\/test.slack.com\/files\/tester\/abc\/test_post",
-        "permalink_public": "https:\/\/slack-files.com\/abc-def-ghi",
-        "edit_link": "https:\/\/test.slack.com\/files\/tester\/abc\/test_post\/edit",
+        "url": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/test_post",
+        "url_download": "https:\/\/uim-files.com\/files-pub\/abc-def-ghi\/download\/test_post",
+        "url_private": "https:\/\/files.uim.com\/files-pri\/abc-def\/test_post",
+        "url_private_download": "https:\/\/files.uim.com\/files-pri\/abc-def\/download\/test_post",
+        "permalink": "https:\/\/test.uim.com\/files\/tester\/abc\/test_post",
+        "permalink_public": "https:\/\/uim-files.com\/abc-def-ghi",
+        "edit_link": "https:\/\/test.uim.com\/files\/tester\/abc\/test_post\/edit",
         "preview": "test post body",
         "channels": [
             "C2147483705"
@@ -251,7 +251,7 @@ func TestComment(t *testing.T) {
 	assert.NotNil(t, message)
 	assert.Equal(t, "message", message.Type)
 	assert.Equal(t, "file_comment", message.SubType)
-	assert.Equal(t, "<@U2147483697|tester> commented on <@U2147483697|tester>'s file <https://test.slack.com/files/tester/abc/test_post|test post>: another comment", message.Text)
+	assert.Equal(t, "<@U2147483697|tester> commented on <@U2147483697|tester>'s file <https://test.uim.com/files/tester/abc/test_post|test post>: another comment", message.Text)
 	// TODO: Assert File
 	// TODO: Assert Comment
 	assert.Equal(t, "1433316360.000009", message.Timestamp)
@@ -770,18 +770,18 @@ var fileShareMessage = `{
         "is_external": false,
         "external_type": "",
         "size" : 12345,
-        "url": "https:\/\/slack-files.com\/files-pub\/T024BE7LD-F024BERPE-09acb6\/1.png",
-        "url_download": "https:\/\/slack-files.com\/files-pub\/T024BE7LD-F024BERPE-09acb6\/download\/1.png",
-        "url_private": "https:\/\/slack.com\/files-pri\/T024BE7LD-F024BERPE\/1.png",
-        "url_private_download": "https:\/\/slack.com\/files-pri\/T024BE7LD-F024BERPE\/download\/1.png",
-        "thumb_64": "https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_64.png",
-        "thumb_80": "https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_80.png",
-        "thumb_360": "https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_360.png",
-        "thumb_360_gif": "https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_360.gif",
+        "url": "https:\/\/uim-files.com\/files-pub\/T024BE7LD-F024BERPE-09acb6\/1.png",
+        "url_download": "https:\/\/uim-files.com\/files-pub\/T024BE7LD-F024BERPE-09acb6\/download\/1.png",
+        "url_private": "https:\/\/uim.com\/files-pri\/T024BE7LD-F024BERPE\/1.png",
+        "url_private_download": "https:\/\/uim.com\/files-pri\/T024BE7LD-F024BERPE\/download\/1.png",
+        "thumb_64": "https:\/\/uim-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_64.png",
+        "thumb_80": "https:\/\/uim-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_80.png",
+        "thumb_360": "https:\/\/uim-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_360.png",
+        "thumb_360_gif": "https:\/\/uim-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_360.gif",
         "thumb_360_w": 100,
         "thumb_360_h": 100,
-        "permalink" : "https:\/\/tinyspeck.slack.com\/files\/cal\/F024BERPE\/1.png",
-        "edit_link" : "https:\/\/tinyspeck.slack.com\/files\/cal\/F024BERPE\/1.png/edit",
+        "permalink" : "https:\/\/tinyspeck.uim.com\/files\/cal\/F024BERPE\/1.png",
+        "edit_link" : "https:\/\/tinyspeck.uim.com\/files\/cal\/F024BERPE\/1.png/edit",
         "preview" : "&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;meta charset='utf-8'&gt;",
         "preview_highlight" : "&lt;div class=\"sssh-code\"&gt;&lt;div class=\"sssh-line\"&gt;&lt;pre&gt;&lt;!DOCTYPE html...",
         "lines" : 123,

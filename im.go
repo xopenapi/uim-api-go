@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -17,7 +17,7 @@ type imResponseFull struct {
 	Channel       imChannel `json:"channel"`
 	IMs           []IM      `json:"ims"`
 	History
-	SlackResponse
+	UimResponse
 }
 
 // IM contains information related to the Direct Message channel

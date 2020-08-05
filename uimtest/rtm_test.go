@@ -1,10 +1,10 @@
-package slacktest
+package uimtest
 
 import (
 	"testing"
 	"time"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -13,14 +13,14 @@ func TestRTMInfo(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	api := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	api := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
-	messageChan := make(chan (*slack.ConnectedEvent), 1)
+	messageChan := make(chan (*uim.ConnectedEvent), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ConnectedEvent:
+			case *uim.ConnectedEvent:
 				messageChan <- ev
 			}
 		}
@@ -44,14 +44,14 @@ func TestRTMPing(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	api := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	api := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
-	messageChan := make(chan (*slack.LatencyReport), 1)
+	messageChan := make(chan (*uim.LatencyReport), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.LatencyReport:
+			case *uim.LatencyReport:
 				messageChan <- ev
 			}
 		}
@@ -72,14 +72,14 @@ func TestRTMDirectMessage(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	api := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	api := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
-	messageChan := make(chan (*slack.MessageEvent), 1)
+	messageChan := make(chan (*uim.MessageEvent), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.MessageEvent:
+			case *uim.MessageEvent:
 				messageChan <- ev
 			}
 		}
@@ -101,14 +101,14 @@ func TestRTMChannelMessage(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	api := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	api := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
-	messageChan := make(chan (*slack.MessageEvent), 1)
+	messageChan := make(chan (*uim.MessageEvent), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.MessageEvent:
+			case *uim.MessageEvent:
 				messageChan <- ev
 			}
 		}

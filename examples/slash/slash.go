@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
@@ -16,19 +16,19 @@ func main() {
 		signingSecret string
 	)
 
-	flag.StringVar(&signingSecret, "secret", "YOUR_SIGNING_SECRET_HERE", "Your Slack app's signing secret")
+	flag.StringVar(&signingSecret, "secret", "YOUR_SIGNING_SECRET_HERE", "Your uim app's signing secret")
 	flag.Parse()
 
 	http.HandleFunc("/slash", func(w http.ResponseWriter, r *http.Request) {
 
-		verifier, err := slack.NewSecretsVerifier(r.Header, signingSecret)
+		verifier, err := uim.NewSecretsVerifier(r.Header, signingSecret)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
 		r.Body = ioutil.NopCloser(io.TeeReader(r.Body, &verifier))
-		s, err := slack.SlashCommandParse(r)
+		s, err := uim.SlashCommandParse(r)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -41,7 +41,7 @@ func main() {
 
 		switch s.Command {
 		case "/echo":
-			params := &slack.Msg{Text: s.Text}
+			params := &uim.Msg{Text: s.Text}
 			b, err := json.Marshal(params)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)

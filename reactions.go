@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -43,7 +43,7 @@ type getReactionsResponseFull struct {
 	FC struct {
 		Reactions []ItemReaction
 	} `json:"comment"`
-	SlackResponse
+	UimResponse
 }
 
 func (res getReactionsResponseFull) extractReactions() []ItemReaction {
@@ -101,7 +101,7 @@ type listReactionsResponseFull struct {
 		} `json:"comment"`
 	}
 	Paging `json:"paging"`
-	SlackResponse
+	UimResponse
 }
 
 func (res listReactionsResponseFull) extractReactedItems() []ReactedItem {
@@ -153,7 +153,7 @@ func (api *Client) AddReactionContext(ctx context.Context, name string, item Ite
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "reactions.add", values, response); err != nil {
 		return err
 	}
@@ -187,7 +187,7 @@ func (api *Client) RemoveReactionContext(ctx context.Context, name string, item 
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "reactions.remove", values, response); err != nil {
 		return err
 	}

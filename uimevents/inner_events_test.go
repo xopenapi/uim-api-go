@@ -1,4 +1,4 @@
-package slackevents
+package uimevents
 
 import (
 	"encoding/json"

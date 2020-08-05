@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 
 // AuthRevokeResponse contains our Auth response from the auth.revoke endpoint
 type AuthRevokeResponse struct {
-	SlackResponse      // Contains the "ok", and "Error", if any
+	UimResponse      // Contains the "ok", and "Error", if any
 	Revoked       bool `json:"revoked,omitempty"`
 }
 

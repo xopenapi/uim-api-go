@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"fmt"
@@ -29,7 +29,7 @@ func TestSlash_ServeHTTP(t *testing.T) {
 				"team_id":         []string{"T1234ABCD"},
 				"user_id":         []string{"U1234ABCD"},
 				"user_name":       []string{"username"},
-				"response_url":    []string{"https://hooks.slack.com/commands/XXXXXXXX/00000000000/YYYYYYYYYYYYYY"},
+				"response_url":    []string{"https://hooks.uim.com/commands/XXXXXXXX/00000000000/YYYYYYYYYYYYYY"},
 				"token":           []string{"valid"},
 				"channel_name":    []string{"channel"},
 				"trigger_id":      []string{"0000000000.1111111111.222222222222aaaaaaaaaaaaaa"},
@@ -44,7 +44,7 @@ func TestSlash_ServeHTTP(t *testing.T) {
 				TeamID:         "T1234ABCD",
 				UserID:         "U1234ABCD",
 				UserName:       "username",
-				ResponseURL:    "https://hooks.slack.com/commands/XXXXXXXX/00000000000/YYYYYYYYYYYYYY",
+				ResponseURL:    "https://hooks.uim.com/commands/XXXXXXXX/00000000000/YYYYYYYYYYYYYY",
 				Token:          "valid",
 				ChannelName:    "channel",
 				TriggerID:      "0000000000.1111111111.222222222222aaaaaaaaaaaaaa",

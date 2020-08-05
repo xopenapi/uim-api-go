@@ -1,10 +1,10 @@
-package slack
+package uim
 
-import "github.com/slack-go/slack/internal/errorsx"
+import "github.com/xopenapi/uim-api-go/internal/errorsx"
 
 // Errors returned by various methods.
 const (
-	ErrAlreadyDisconnected  = errorsx.String("Invalid call to Disconnect - Slack API is already disconnected")
+	ErrAlreadyDisconnected  = errorsx.String("Invalid call to Disconnect - UIM API is already disconnected")
 	ErrRTMDisconnected      = errorsx.String("disconnect received while trying to connect")
 	ErrRTMGoodbye           = errorsx.String("goodbye detected")
 	ErrRTMDeadman           = errorsx.String("deadman switch triggered")

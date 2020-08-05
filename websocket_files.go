@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // FileActionEvent represents the File action event
 type fileActionEvent struct {

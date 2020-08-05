@@ -6,18 +6,18 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 )
 
 func main() {
-	api := slack.New(
+	api := uim.New(
 		"YOUR TOKEN HERE",
-		slack.OptionDebug(true),
-		slack.OptionLog(log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)),
+		uim.OptionDebug(true),
+		uim.OptionLog(log.New(os.Stdout, "uim-bot: ", log.Lshortfile|log.LstdFlags)),
 	)
 
 	// turn on the batch_presence_aware option
-	rtm := api.NewRTM(slack.RTMOptionConnParams(url.Values{
+	rtm := api.NewRTM(uim.RTMOptionConnParams(url.Values{
 		"batch_presence_aware": {"1"},
 	}))
 	go rtm.ManageConnection()
@@ -25,32 +25,32 @@ func main() {
 	for msg := range rtm.IncomingEvents {
 		fmt.Print("Event Received: ")
 		switch ev := msg.Data.(type) {
-		case *slack.HelloEvent:
+		case *uim.HelloEvent:
 			// Replace USER-ID-N here with your User IDs
 			rtm.SendMessage(rtm.NewSubscribeUserPresence([]string{
 				"USER-ID-1",
 				"USER-ID-2",
 			}))
 
-		case *slack.ConnectedEvent:
+		case *uim.ConnectedEvent:
 			fmt.Println("Infos:", ev.Info)
 			fmt.Println("Connection counter:", ev.ConnectionCount)
 			// Replace C2147483705 with your Channel ID
 			rtm.SendMessage(rtm.NewOutgoingMessage("Hello world", "C2147483705"))
 
-		case *slack.MessageEvent:
+		case *uim.MessageEvent:
 			fmt.Printf("Message: %v\n", ev)
 
-		case *slack.PresenceChangeEvent:
+		case *uim.PresenceChangeEvent:
 			fmt.Printf("Presence Change: %v\n", ev)
 
-		case *slack.LatencyReport:
+		case *uim.LatencyReport:
 			fmt.Printf("Current latency: %v\n", ev.Value)
 
-		case *slack.RTMError:
+		case *uim.RTMError:
 			fmt.Printf("Error: %s\n", ev.Error())
 
-		case *slack.InvalidAuthEvent:
+		case *uim.InvalidAuthEvent:
 			fmt.Printf("Invalid credentials")
 			return
 

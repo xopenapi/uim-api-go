@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // FileBlock defines data that is used to display a remote file.
 //
-// More Information: https://api.slack.com/reference/block-kit/blocks#file
+// More Information: https://api.uim.com/reference/block-kit/blocks#file
 type FileBlock struct {
 	Type       MessageBlockType `json:"type"`
 	BlockID    string           `json:"block_id,omitempty"`

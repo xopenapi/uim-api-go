@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"fmt"
@@ -37,7 +37,7 @@ func (sh *starsHandler) handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(sh.response))
 }
 
-func TestSlack_AddStar(t *testing.T) {
+func TestUIM_AddStar(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -84,7 +84,7 @@ func TestSlack_AddStar(t *testing.T) {
 	}
 }
 
-func TestSlack_RemoveStar(t *testing.T) {
+func TestUIM_RemoveStar(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -131,7 +131,7 @@ func TestSlack_RemoveStar(t *testing.T) {
 	}
 }
 
-func TestSlack_ListStars(t *testing.T) {
+func TestUIM_ListStars(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	rh := newStarsHandler()

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 type starEvent struct {
 	Type           string      `json:"type"`

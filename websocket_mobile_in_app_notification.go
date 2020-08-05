@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // MobileInAppNotificationEvent represents the update event for Mobile App Notification.
 type MobileInAppNotificationEvent struct {

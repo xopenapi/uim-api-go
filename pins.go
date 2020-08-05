@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 type listPinsResponseFull struct {
 	Items  []Item
 	Paging `json:"paging"`
-	SlackResponse
+	UimResponse
 }
 
 // AddPin pins an item in a channel
@@ -33,7 +33,7 @@ func (api *Client) AddPinContext(ctx context.Context, channel string, item ItemR
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "pins.add", values, response); err != nil {
 		return err
 	}
@@ -62,7 +62,7 @@ func (api *Client) RemovePinContext(ctx context.Context, channel string, item It
 		values.Set("file_comment", item.Comment)
 	}
 
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(ctx, "pins.remove", values, response); err != nil {
 		return err
 	}

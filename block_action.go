@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // ActionBlock defines data that is used to hold interactive elements.
 //
-// More Information: https://api.slack.com/reference/messaging/blocks#actions
+// More Information: https://api.uim.com/reference/messaging/blocks#actions
 type ActionBlock struct {
 	Type     MessageBlockType `json:"type"`
 	BlockID  string           `json:"block_id,omitempty"`

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/slack-go/slack/slackutilsx"
+	"github.com/xopenapi/uim-api-go/uimutilsx"
 )
 
 const (
@@ -33,7 +33,7 @@ type chatResponseFull struct {
 	MessageTimeStamp   string `json:"message_ts"`                     //Ephemeral message timestamp
 	ScheduledMessageID string `json:"scheduled_message_id,omitempty"` //Scheduled message id
 	Text               string `json:"text"`
-	SlackResponse
+	UimResponse
 }
 
 // getMessageTimestamp will inspect the `chatResponseFull` to ruturn a timestamp value
@@ -105,8 +105,8 @@ func (api *Client) DeleteMessageContext(ctx context.Context, channel, messageTim
 }
 
 // ScheduleMessage sends a message to a channel.
-// Message is escaped by default according to https://api.slack.com/docs/formatting
-// Use http://davestevens.github.io/slack-message-builder/ to help crafting your message.
+// Message is escaped by default according to https://api.uim.com/docs/formatting
+// Use http://davestevens.github.io/uim-message-builder/ to help crafting your message.
 func (api *Client) ScheduleMessage(channelID, postAt string, options ...MsgOption) (string, string, error) {
 	respChannel, respTimestamp, _, err := api.SendMessageContext(
 		context.Background(),
@@ -118,8 +118,8 @@ func (api *Client) ScheduleMessage(channelID, postAt string, options ...MsgOptio
 }
 
 // PostMessage sends a message to a channel.
-// Message is escaped by default according to https://api.slack.com/docs/formatting
-// Use http://davestevens.github.io/slack-message-builder/ to help crafting your message.
+// Message is escaped by default according to https://api.uim.com/docs/formatting
+// Use http://davestevens.github.io/uim-message-builder/ to help crafting your message.
 func (api *Client) PostMessage(channelID string, options ...MsgOption) (string, string, error) {
 	respChannel, respTimestamp, _, err := api.SendMessageContext(
 		context.Background(),
@@ -143,8 +143,8 @@ func (api *Client) PostMessageContext(ctx context.Context, channelID string, opt
 }
 
 // PostEphemeral sends an ephemeral message to a user in a channel.
-// Message is escaped by default according to https://api.slack.com/docs/formatting
-// Use http://davestevens.github.io/slack-message-builder/ to help crafting your message.
+// Message is escaped by default according to https://api.uim.com/docs/formatting
+// Use http://davestevens.github.io/uim-message-builder/ to help crafting your message.
 func (api *Client) PostEphemeral(channelID, userID string, options ...MsgOption) (string, error) {
 	return api.PostEphemeralContext(
 		context.Background(),
@@ -475,7 +475,7 @@ func MsgOptionUsername(username string) MsgOption {
 func MsgOptionText(text string, escape bool) MsgOption {
 	return func(config *sendConfig) error {
 		if escape {
-			text = slackutilsx.EscapeMessage(text)
+			text = uimutilsx.EscapeMessage(text)
 		}
 		config.values.Add("text", text)
 		return nil
@@ -650,7 +650,7 @@ func MsgOptionPostMessageParameters(params PostMessageParameters) MsgOption {
 		}
 
 		// I want to send a message with explicit `as_user` `true` and `unfurl_links` `false` in request.
-		// Because setting `as_user` to `true` will change the default value for `unfurl_links` to `true` on Slack API side.
+		// Because setting `as_user` to `true` will change the default value for `unfurl_links` to `true` on UIM API side.
 		if params.AsUser != DEFAULT_MESSAGE_ASUSER && params.UnfurlLinks == DEFAULT_MESSAGE_UNFURL_LINKS {
 			config.values.Set("unfurl_links", "false")
 		}
@@ -679,8 +679,8 @@ func MsgOptionPostMessageParameters(params PostMessageParameters) MsgOption {
 }
 
 // PermalinkParameters are the parameters required to get a permalink to a
-// message. Slack documentation can be found here:
-// https://api.slack.com/methods/chat.getPermalink
+// message. UIM documentation can be found here:
+// https://api.uim.com/methods/chat.getPermalink
 type PermalinkParameters struct {
 	Channel string
 	Ts      string
@@ -704,7 +704,7 @@ func (api *Client) GetPermalinkContext(ctx context.Context, params *PermalinkPar
 	response := struct {
 		Channel   string `json:"channel"`
 		Permalink string `json:"permalink"`
-		SlackResponse
+		UimResponse
 	}{}
 	err := api.getMethod(ctx, "chat.getPermalink", values, &response)
 	if err != nil {
@@ -726,7 +726,7 @@ func (api *Client) GetScheduledMessages(params *GetScheduledMessagesParameters) 
 	return api.GetScheduledMessagesContext(context.Background(), params)
 }
 
-// GetScheduledMessagesContext returns the list of scheduled messages in a Slack team with a custom context
+// GetScheduledMessagesContext returns the list of scheduled messages in a UIM team with a custom context
 func (api *Client) GetScheduledMessagesContext(ctx context.Context, params *GetScheduledMessagesParameters) (channels []Message, nextCursor string, err error) {
 	values := url.Values{
 		"token": {api.token},
@@ -749,7 +749,7 @@ func (api *Client) GetScheduledMessagesContext(ctx context.Context, params *GetS
 	response := struct {
 		Messages         []Message        `json:"scheduled_messages"`
 		ResponseMetaData responseMetaData `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{}
 
 	err = api.postMethod(ctx, "chat.scheduledMessages.list", values, &response)
@@ -771,7 +771,7 @@ func (api *Client) DeleteScheduledMessage(params *DeleteScheduledMessageParamete
 	return api.DeleteScheduledMessageContext(context.Background(), params)
 }
 
-// DeleteScheduledMessageContext returns the list of scheduled messages in a Slack team with a custom context
+// DeleteScheduledMessageContext returns the list of scheduled messages in a UIM team with a custom context
 func (api *Client) DeleteScheduledMessageContext(ctx context.Context, params *DeleteScheduledMessageParameters) (bool, error) {
 	values := url.Values{
 		"token":                {api.token},
@@ -780,7 +780,7 @@ func (api *Client) DeleteScheduledMessageContext(ctx context.Context, params *De
 		"as_user":              {strconv.FormatBool(params.AsUser)},
 	}
 	response := struct {
-		SlackResponse
+		UimResponse
 	}{}
 
 	err := api.postMethod(ctx, "chat.deleteScheduledMessage", values, &response)

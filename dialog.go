@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -34,8 +34,8 @@ type DialogTrigger struct {
 	Dialog    Dialog `json:"dialog"`     //Required.
 }
 
-// Dialog as in Slack dialogs
-// https://api.slack.com/dialogs#option_element_attributes#top-level_dialog_attributes
+// Dialog as in UIM dialogs
+// https://api.uim.com/dialogs#option_element_attributes#top-level_dialog_attributes
 type Dialog struct {
 	TriggerID      string          `json:"trigger_id"`      // Required
 	CallbackID     string          `json:"callback_id"`     // Required
@@ -52,7 +52,7 @@ type DialogElement interface{}
 // DialogCallback DEPRECATED use InteractionCallback
 type DialogCallback InteractionCallback
 
-// DialogSubmissionCallback is sent from Slack when a user submits a form from within a dialog
+// DialogSubmissionCallback is sent from UIM when a user submits a form from within a dialog
 type DialogSubmissionCallback struct {
 	State      string            `json:"state,omitempty"`
 	Submission map[string]string `json:"submission"`
@@ -60,7 +60,7 @@ type DialogSubmissionCallback struct {
 
 // DialogOpenResponse response from `dialog.open`
 type DialogOpenResponse struct {
-	SlackResponse
+	UimResponse
 	DialogResponseMetadata DialogResponseMetadata `json:"response_metadata"`
 }
 

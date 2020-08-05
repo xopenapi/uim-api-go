@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/http"
@@ -9,8 +9,8 @@ import (
 func getEmojiHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response := []byte(`{"ok": true, "emoji": {
-			"bowtie": "https://my.slack.com/emoji/bowtie/46ec6f2bb0.png",
-			"squirrel": "https://my.slack.com/emoji/squirrel/f35f40c0e0.png",
+			"bowtie": "https://my.uim.com/emoji/bowtie/46ec6f2bb0.png",
+			"squirrel": "https://my.uim.com/emoji/squirrel/f35f40c0e0.png",
 			"shipit": "alias:squirrel"
 		}}`)
 	rw.Write(response)
@@ -22,8 +22,8 @@ func TestGetEmoji(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	emojisResponse := map[string]string{
-		"bowtie":   "https://my.slack.com/emoji/bowtie/46ec6f2bb0.png",
-		"squirrel": "https://my.slack.com/emoji/squirrel/f35f40c0e0.png",
+		"bowtie":   "https://my.uim.com/emoji/bowtie/46ec6f2bb0.png",
+		"squirrel": "https://my.uim.com/emoji/squirrel/f35f40c0e0.png",
 		"shipit":   "alias:squirrel",
 	}
 

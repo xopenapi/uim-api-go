@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -12,7 +12,7 @@ import (
 func postMessageInvalidChannelHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(chatResponseFull{
-		SlackResponse: SlackResponse{Ok: false, Error: "channel_not_found"},
+		UimResponse: UimResponse{Ok: false, Error: "channel_not_found"},
 	})
 	rw.Write(response)
 }
@@ -53,7 +53,7 @@ func TestGetPermalink(t *testing.T) {
 		}
 
 		rw.Header().Set("Content-Type", "application/json")
-		response := []byte("{\"ok\": true, \"channel\": \"" + channel + "\", \"permalink\": \"https://ghostbusters.slack.com/archives/" + channel + "/" + timeStamp + "\"}")
+		response := []byte("{\"ok\": true, \"channel\": \"" + channel + "\", \"permalink\": \"https://ghostbusters.uim.com/archives/" + channel + "/" + timeStamp + "\"}")
 		rw.Write(response)
 	})
 
@@ -62,7 +62,7 @@ func TestGetPermalink(t *testing.T) {
 	pp := PermalinkParameters{Channel: channel, Ts: timeStamp}
 	pl, err := api.GetPermalink(&pp)
 
-	if got, want := pl, "https://ghostbusters.slack.com/archives/C1H9RESGA/p135854651500008"; got != want {
+	if got, want := pl, "https://ghostbusters.uim.com/archives/C1H9RESGA/p135854651500008"; got != want {
 		t.Errorf("unexpected permalink: got %s, want %s", got, want)
 	}
 

@@ -1,15 +1,15 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
 	"net/http"
 	"testing"
 
-	"github.com/slack-go/slack/internal/errorsx"
+	"github.com/xopenapi/uim-api-go/internal/errorsx"
 	"github.com/stretchr/testify/assert"
 )
 
-var dummySlackErr = errorsx.String("dummy_error_from_slack")
+var dummyUimErr = errorsx.String("dummy_error_from_uim")
 
 type viewsHandler struct {
 	rawResponse string
@@ -20,7 +20,7 @@ func (h *viewsHandler) handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(h.rawResponse))
 }
 
-func TestSlack_OpenView(t *testing.T) {
+func TestUIM_OpenView(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 
@@ -39,11 +39,11 @@ func TestSlack_OpenView(t *testing.T) {
 			expectedErr:  ErrParametersMissing,
 		},
 		{
-			caseName:  "raise an error from Slack API",
+			caseName:  "raise an error from UIM API",
 			triggerID: "dummy_trigger_id",
 			rawResp: `{
 				"ok": false,
-				"error": "dummy_error_from_slack",
+				"error": "dummy_error_from_uim",
 				"response_metadata": {
 					"messages": [
 						"dummy error response"
@@ -51,13 +51,13 @@ func TestSlack_OpenView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    false,
-					Error: dummySlackErr.Error(),
+					Error: dummyUimErr.Error(),
 				},
 				View{},
 			},
-			expectedErr: dummySlackErr,
+			expectedErr: dummyUimErr,
 		},
 		{
 			caseName:  "success",
@@ -107,7 +107,7 @@ func TestSlack_OpenView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    true,
 					Error: "",
 				},
@@ -149,7 +149,7 @@ func TestSlack_OpenView(t *testing.T) {
 	}
 }
 
-func TestSlack_View_PublishView(t *testing.T) {
+func TestUIM_View_PublishView(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 
@@ -168,11 +168,11 @@ func TestSlack_View_PublishView(t *testing.T) {
 			expectedErr:  ErrParametersMissing,
 		},
 		{
-			caseName: "raise an error from Slack API",
+			caseName: "raise an error from UIM API",
 			userID:   "dummy_user_id",
 			rawResp: `{
 				"ok": false,
-				"error": "dummy_error_from_slack",
+				"error": "dummy_error_from_uim",
 				"response_metadata": {
 					"messages": [
 						"dummy error response"
@@ -180,13 +180,13 @@ func TestSlack_View_PublishView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    false,
-					Error: dummySlackErr.Error(),
+					Error: dummyUimErr.Error(),
 				},
 				View{},
 			},
-			expectedErr: dummySlackErr,
+			expectedErr: dummyUimErr,
 		},
 		{
 			caseName: "success",
@@ -226,7 +226,7 @@ func TestSlack_View_PublishView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    true,
 					Error: "",
 				},
@@ -268,7 +268,7 @@ func TestSlack_View_PublishView(t *testing.T) {
 	}
 }
 
-func TestSlack_PushView(t *testing.T) {
+func TestUIM_PushView(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 
@@ -287,11 +287,11 @@ func TestSlack_PushView(t *testing.T) {
 			expectedErr:  ErrParametersMissing,
 		},
 		{
-			caseName:  "raise an error from Slack API",
+			caseName:  "raise an error from UIM API",
 			triggerID: "dummy_trigger_id",
 			rawResp: `{
 				"ok": false,
-				"error": "dummy_error_from_slack",
+				"error": "dummy_error_from_uim",
 				"response_metadata": {
 					"messages": [
 						"dummy error response"
@@ -299,13 +299,13 @@ func TestSlack_PushView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    false,
-					Error: dummySlackErr.Error(),
+					Error: dummyUimErr.Error(),
 				},
 				View{},
 			},
-			expectedErr: dummySlackErr,
+			expectedErr: dummyUimErr,
 		},
 		{
 			caseName:  "success",
@@ -355,7 +355,7 @@ func TestSlack_PushView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    true,
 					Error: "",
 				},
@@ -397,7 +397,7 @@ func TestSlack_PushView(t *testing.T) {
 	}
 }
 
-func TestSlack_UpdateView(t *testing.T) {
+func TestUIM_UpdateView(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 
@@ -418,12 +418,12 @@ func TestSlack_UpdateView(t *testing.T) {
 			expectedErr:  ErrParametersMissing,
 		},
 		{
-			caseName:   "raise an error from Slack API",
+			caseName:   "raise an error from UIM API",
 			externalID: "dummy_external_id",
 			viewID:     "",
 			rawResp: `{
 				"ok": false,
-				"error": "dummy_error_from_slack",
+				"error": "dummy_error_from_uim",
 				"response_metadata": {
 					"messages": [
 						"dummy error response"
@@ -431,13 +431,13 @@ func TestSlack_UpdateView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    false,
-					Error: dummySlackErr.Error(),
+					Error: dummyUimErr.Error(),
 				},
 				View{},
 			},
-			expectedErr: dummySlackErr,
+			expectedErr: dummyUimErr,
 		},
 		{
 			caseName:   "success",
@@ -488,7 +488,7 @@ func TestSlack_UpdateView(t *testing.T) {
 				}
 			}`,
 			expectedResp: &ViewResponse{
-				SlackResponse{
+				UimResponse{
 					Ok:    true,
 					Error: "",
 				},
@@ -536,7 +536,7 @@ func assertViewSubmissionResponse(t *testing.T, resp *ViewSubmissionResponse, en
 	assert.Equal(t, decoded, resp)
 }
 
-func TestSlack_ClearViewSubmissionResponse(t *testing.T) {
+func TestUIM_ClearViewSubmissionResponse(t *testing.T) {
 	resp := NewClearViewSubmissionResponse()
 	rawResp := `{
 		"response_action": "clear"
@@ -545,7 +545,7 @@ func TestSlack_ClearViewSubmissionResponse(t *testing.T) {
 	assertViewSubmissionResponse(t, resp, rawResp)
 }
 
-func TestSlack_UpdateViewSubmissionResponse(t *testing.T) {
+func TestUIM_UpdateViewSubmissionResponse(t *testing.T) {
 	resp := NewUpdateViewSubmissionResponse(&ModalViewRequest{
 		Type:   VTModal,
 		Title:  NewTextBlockObject("plain_text", "Test update view submission response", false, false),
@@ -573,7 +573,7 @@ func TestSlack_UpdateViewSubmissionResponse(t *testing.T) {
 	assertViewSubmissionResponse(t, resp, rawResp)
 }
 
-func TestSlack_PushViewSubmissionResponse(t *testing.T) {
+func TestUIM_PushViewSubmissionResponse(t *testing.T) {
 	resp := NewPushViewSubmissionResponse(&ModalViewRequest{
 		Type:  VTModal,
 		Title: NewTextBlockObject("plain_text", "Test update view submission response", false, false),
@@ -618,7 +618,7 @@ func TestSlack_PushViewSubmissionResponse(t *testing.T) {
 	assertViewSubmissionResponse(t, resp, rawResp)
 }
 
-func TestSlack_ErrorsViewSubmissionResponse(t *testing.T) {
+func TestUIM_ErrorsViewSubmissionResponse(t *testing.T) {
 	resp := NewErrorsViewSubmissionResponse(map[string]string{
 		"input_text_action_id": "Please input a name that's at least 6 characters long",
 		"file_action_id":       "File exceeded size limit of 5 KB",

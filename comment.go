@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // Comment contains all the information relative to a comment
 type Comment struct {

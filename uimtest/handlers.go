@@ -1,4 +1,4 @@
-package slacktest
+package uimtest
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"time"
 
 	websocket "github.com/gorilla/websocket"
-	slack "github.com/slack-go/slack"
+	uim "github.com/uim-go/uim"
 )
 
 func contextHandler(server *Server, next http.HandlerFunc) http.Handler {
@@ -69,7 +69,7 @@ func (sts *Server) postMessageHandler(w http.ResponseWriter, r *http.Request) {
 
 	ts := time.Now().Unix()
 	resp := fmt.Sprintf(`{"channel":"%s","ts":"%d", "text":"%s", "ok": true}`, values.Get("channel"), ts, values.Get("text"))
-	m := slack.Message{}
+	m := uim.Message{}
 	m.Type = "message"
 	m.Channel = values.Get("channel")
 	m.Timestamp = fmt.Sprintf("%d", ts)
@@ -90,7 +90,7 @@ func (sts *Server) postMessageHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, msg, http.StatusInternalServerError)
 			return
 		}
-		var attaches []slack.Attachment
+		var attaches []uim.Attachment
 		aJErr := json.Unmarshal([]byte(decoded), &attaches)
 		if aJErr != nil {
 			msg := fmt.Sprintf("Unable to decode attachments string to json: %s", aJErr.Error())
@@ -228,13 +228,13 @@ func Websocket(delegate func(c *websocket.Conn)) func(w http.ResponseWriter, r *
 
 // RTMServerSendGoodbye send a goodbye event
 func RTMServerSendGoodbye(c *websocket.Conn) error {
-	return c.WriteJSON(slack.Event{Type: "goodbye"})
+	return c.WriteJSON(uim.Event{Type: "goodbye"})
 }
 
 // RTMRespEventType retrieve the event type from the next message
 func RTMRespEventType(c *websocket.Conn) (t string, m json.RawMessage, err error) {
 	var (
-		evt slack.Event
+		evt uim.Event
 	)
 
 	if err = c.ReadJSON(&m); err != nil {
@@ -251,15 +251,15 @@ func RTMRespEventType(c *websocket.Conn) (t string, m json.RawMessage, err error
 // RTMRespPong decode a ping and respond with a pong event.
 func RTMRespPong(c *websocket.Conn, m json.RawMessage) (err error) {
 	var (
-		ping slack.Ping
-		pong slack.Pong
+		ping uim.Ping
+		pong uim.Pong
 	)
 
 	if err = json.Unmarshal(m, &ping); err != nil {
 		return err
 	}
 
-	pong = slack.Pong{
+	pong = uim.Pong{
 		Type:    "pong",
 		ReplyTo: ping.ID,
 	}

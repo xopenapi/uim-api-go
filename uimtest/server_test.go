@@ -1,4 +1,4 @@
-package slacktest
+package uimtest
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/slack-go/slack"
+	"github.com/uim-go/uim"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -64,9 +64,9 @@ func TestGetSeenOutboundMessages(t *testing.T) {
 	assert.True(t, len(seenOutbound) > 0)
 	hadMessage := false
 	for _, msg := range seenOutbound {
-		var m = slack.Message{}
+		var m = uim.Message{}
 		jerr := json.Unmarshal([]byte(msg), &m)
-		assert.NoError(t, jerr, "messages should decode as slack.Message")
+		assert.NoError(t, jerr, "messages should decode as uim.Message")
 		if m.Text == "should see this message" {
 			hadMessage = true
 			break
@@ -80,10 +80,10 @@ func TestGetSeenInboundMessages(t *testing.T) {
 	s := NewTestServer()
 	go s.Start()
 
-	api := slack.New("ABCDEFG", slack.OptionAPIURL(s.GetAPIURL()))
+	api := uim.New("ABCDEFG", uim.OptionAPIURL(s.GetAPIURL()))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
-	rtm.SendMessage(&slack.OutgoingMessage{
+	rtm.SendMessage(&uim.OutgoingMessage{
 		Channel: "foo",
 		Text:    "should see this inbound message",
 	})
@@ -92,9 +92,9 @@ func TestGetSeenInboundMessages(t *testing.T) {
 	assert.True(t, len(seenInbound) > 0)
 	hadMessage := false
 	for _, msg := range seenInbound {
-		var m = slack.Message{}
+		var m = uim.Message{}
 		jerr := json.Unmarshal([]byte(msg), &m)
-		assert.NoError(t, jerr, "messages should decode as slack.Message")
+		assert.NoError(t, jerr, "messages should decode as uim.Message")
 		if m.Text == "should see this inbound message" {
 			hadMessage = true
 			break
@@ -110,11 +110,11 @@ func TestSendChannelInvite(t *testing.T) {
 	go s.Start()
 	rtm := s.GetTestRTMInstance()
 	go rtm.ManageConnection()
-	evChan := make(chan (slack.Channel), 1)
+	evChan := make(chan (uim.Channel), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.ChannelJoinedEvent:
+			case *uim.ChannelJoinedEvent:
 				evChan <- ev.Channel
 			}
 		}
@@ -139,11 +139,11 @@ func TestSendGroupInvite(t *testing.T) {
 	go s.Start()
 	rtm := s.GetTestRTMInstance()
 	go rtm.ManageConnection()
-	evChan := make(chan (slack.Channel), 1)
+	evChan := make(chan (uim.Channel), 1)
 	go func() {
 		for msg := range rtm.IncomingEvents {
 			switch ev := msg.Data.(type) {
-			case *slack.GroupJoinedEvent:
+			case *uim.GroupJoinedEvent:
 				evChan <- ev.Channel
 			}
 		}

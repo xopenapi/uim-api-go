@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	// APIURL of the slack api.
-	APIURL = "https://slack.com/api/"
+	// APIURL of the uim api.
+	APIURL = "https://uim.com/api/"
 	// WEBAPIURLFormat ...
-	WEBAPIURLFormat = "https://%s.slack.com/api/users.admin.%s?t=%d"
+	WEBAPIURLFormat = "https://%s.uim.com/api/users.admin.%s?t=%d"
 )
 
 // httpClient defines the minimal interface needed for an http.Client to be implemented.
@@ -46,11 +46,11 @@ type AuthTestResponse struct {
 }
 
 type authTestResponseFull struct {
-	SlackResponse
+	UimResponse
 	AuthTestResponse
 }
 
-// Client for the slack api.
+// Client for the uim api.
 type ParamOption func(*url.Values)
 
 type Client struct {
@@ -64,7 +64,7 @@ type Client struct {
 // Option defines an option for a Client
 type Option func(*Client)
 
-// OptionHTTPClient - provide a custom http client to the slack client.
+// OptionHTTPClient - provide a custom http client to the uim client.
 func OptionHTTPClient(client httpClient) func(*Client) {
 	return func(c *Client) {
 		c.httpclient = client
@@ -90,13 +90,13 @@ func OptionAPIURL(u string) func(*Client) {
 	return func(c *Client) { c.endpoint = u }
 }
 
-// New builds a slack client from the provided token and options.
+// New builds a uim client from the provided token and options.
 func New(token string, options ...Option) *Client {
 	s := &Client{
 		token:      token,
 		endpoint:   APIURL,
 		httpclient: &http.Client{},
-		log:        log.New(os.Stderr, "slack-go/slack", log.LstdFlags|log.Lshortfile),
+		log:        log.New(os.Stderr, "xopenapi/uim-api-go", log.LstdFlags|log.Lshortfile),
 	}
 
 	for _, opt := range options {
@@ -142,12 +142,12 @@ func (api *Client) Debug() bool {
 	return api.debug
 }
 
-// post to a slack web method.
+// post to a uim web method.
 func (api *Client) postMethod(ctx context.Context, path string, values url.Values, intf interface{}) error {
 	return postForm(ctx, api.httpclient, api.endpoint+path, values, intf, api)
 }
 
-// get a slack web method.
+// get a uim web method.
 func (api *Client) getMethod(ctx context.Context, path string, values url.Values, intf interface{}) error {
 	return getResource(ctx, api.httpclient, api.endpoint+path, values, intf, api)
 }

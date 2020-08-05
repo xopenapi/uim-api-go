@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"testing"
@@ -22,7 +22,7 @@ func TestNewSectionBlock(t *testing.T) {
 
 func TestNewBlockSectionContainsAddedTextBlockAndAccessory(t *testing.T) {
 	textBlockObject := NewTextBlockObject("mrkdwn", "You have a new test: *Hi there* :wave:", true, false)
-	conflictImage := NewImageBlockElement("https://api.slack.com/img/blocks/bkb_template_images/notificationsWarningIcon.png", "notifications warning icon")
+	conflictImage := NewImageBlockElement("https://api.uim.com/img/blocks/bkb_template_images/notificationsWarningIcon.png", "notifications warning icon")
 	sectionBlock := NewSectionBlock(textBlockObject, nil, NewAccessory(conflictImage))
 
 	assert.Equal(t, sectionBlock.BlockType(), MBTSection)

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/url"
@@ -10,7 +10,7 @@ import (
 
 const (
 	// MaxMessageTextLength is the current maximum message length in number of characters as defined here
-	// https://api.slack.com/rtm#limits
+	// https://api.uim.com/rtm#limits
 	MaxMessageTextLength = 4000
 )
 
@@ -39,7 +39,7 @@ type RTM struct {
 	info *Info
 
 	// useRTMStart should be set to true if you want to use
-	// rtm.start to connect to Slack, otherwise it will use
+	// rtm.start to connect to UIM, otherwise it will use
 	// rtm.connect
 	useRTMStart bool
 

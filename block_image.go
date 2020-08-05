@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // ImageBlock defines data required to display an image as a block element
 //
-// More Information: https://api.slack.com/reference/messaging/blocks#image
+// More Information: https://api.uim.com/reference/messaging/blocks#image
 type ImageBlock struct {
 	Type     MessageBlockType `json:"type"`
 	ImageURL string           `json:"image_url"`

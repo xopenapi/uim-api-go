@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -17,7 +17,7 @@ type Reminder struct {
 }
 
 type reminderResp struct {
-	SlackResponse
+	UimResponse
 	Reminder Reminder `json:"reminder"`
 }
 
@@ -31,7 +31,7 @@ func (api *Client) doReminder(ctx context.Context, path string, values url.Value
 
 // AddChannelReminder adds a reminder for a channel.
 //
-// See https://api.slack.com/methods/reminders.add (NOTE: the ability to set
+// See https://api.uim.com/methods/reminders.add (NOTE: the ability to set
 // reminders on a channel is currently undocumented but has been tested to
 // work)
 func (api *Client) AddChannelReminder(channelID, text, time string) (*Reminder, error) {
@@ -46,7 +46,7 @@ func (api *Client) AddChannelReminder(channelID, text, time string) (*Reminder, 
 
 // AddUserReminder adds a reminder for a user.
 //
-// See https://api.slack.com/methods/reminders.add (NOTE: the ability to set
+// See https://api.uim.com/methods/reminders.add (NOTE: the ability to set
 // reminders on a channel is currently undocumented but has been tested to
 // work)
 func (api *Client) AddUserReminder(userID, text, time string) (*Reminder, error) {
@@ -61,13 +61,13 @@ func (api *Client) AddUserReminder(userID, text, time string) (*Reminder, error)
 
 // DeleteReminder deletes an existing reminder.
 //
-// See https://api.slack.com/methods/reminders.delete
+// See https://api.uim.com/methods/reminders.delete
 func (api *Client) DeleteReminder(id string) error {
 	values := url.Values{
 		"token":    {api.token},
 		"reminder": {id},
 	}
-	response := &SlackResponse{}
+	response := &UimResponse{}
 	if err := api.postMethod(context.Background(), "reminders.delete", values, response); err != nil {
 		return err
 	}

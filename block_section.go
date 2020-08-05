@@ -1,8 +1,8 @@
-package slack
+package uim
 
 // SectionBlock defines a new block of type section
 //
-// More Information: https://api.slack.com/reference/messaging/blocks#section
+// More Information: https://api.uim.com/reference/messaging/blocks#section
 type SectionBlock struct {
 	Type      MessageBlockType   `json:"type"`
 	Text      *TextBlockObject   `json:"text,omitempty"`

@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/slack-go/slack/slackutilsx"
+	"github.com/xopenapi/uim-api-go/uimutilsx"
 )
 
 var (
@@ -43,7 +43,7 @@ func TestParseResponse(t *testing.T) {
 		"token": {validToken},
 	}
 
-	responsePartial := &SlackResponse{}
+	responsePartial := &UimResponse{}
 	err := postForm(context.Background(), http.DefaultClient, APIURL+"parseResponse", values, responsePartial, discard{})
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -56,7 +56,7 @@ func TestParseResponseNoToken(t *testing.T) {
 	APIURL := "http://" + serverAddr + "/"
 	values := url.Values{}
 
-	responsePartial := &SlackResponse{}
+	responsePartial := &UimResponse{}
 	err := postForm(context.Background(), http.DefaultClient, APIURL+"parseResponse", values, responsePartial, discard{})
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -76,7 +76,7 @@ func TestParseResponseInvalidToken(t *testing.T) {
 	values := url.Values{
 		"token": {"whatever"},
 	}
-	responsePartial := &SlackResponse{}
+	responsePartial := &UimResponse{}
 	err := postForm(context.Background(), http.DefaultClient, APIURL+"parseResponse", values, responsePartial, discard{})
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -95,7 +95,7 @@ func TestRetryable(t *testing.T) {
 		statusCodeError{Code: http.StatusInternalServerError},
 		statusCodeError{Code: http.StatusTooManyRequests},
 	} {
-		r, ok := e.(slackutilsx.Retryable)
+		r, ok := e.(uimutilsx.Retryable)
 		if !ok {
 			t.Errorf("expected %#v to implement Retryable", e)
 		}

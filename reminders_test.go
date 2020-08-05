@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"net/http"
@@ -37,7 +37,7 @@ func (rh *remindersHandler) handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func TestSlack_AddReminder(t *testing.T) {
+func TestUIM_AddReminder(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {
@@ -118,7 +118,7 @@ func TestSlack_AddReminder(t *testing.T) {
 	}
 }
 
-func TestSlack_DeleteReminder(t *testing.T) {
+func TestUIM_DeleteReminder(t *testing.T) {
 	once.Do(startServer)
 	api := New("testing-token", OptionAPIURL("http://"+serverAddr+"/"))
 	tests := []struct {

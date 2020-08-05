@@ -1,4 +1,4 @@
-package slack
+package uim
 
 // OutgoingMessage is used for the realtime API, and seems incomplete.
 type OutgoingMessage struct {
@@ -19,7 +19,7 @@ type Message struct {
 	PreviousMessage *Msg `json:"previous_message,omitempty"`
 }
 
-// Msg contains information about a slack message
+// Msg contains information about a UIM message
 type Msg struct {
 	// Basic Message
 	ClientMsgID     string       `json:"client_msg_id,omitempty"`
@@ -45,7 +45,7 @@ type Msg struct {
 	DeletedTimestamp string `json:"deleted_ts,omitempty"` // message_deleted
 	EventTimestamp   string `json:"event_ts,omitempty"`
 
-	// bot_message (https://api.slack.com/events/message/bot_message)
+	// bot_message (https://api.uim.com/events/message/bot_message)
 	BotID    string `json:"bot_id,omitempty"`
 	Username string `json:"username,omitempty"`
 	Icons    *Icon  `json:"icons,omitempty"`
@@ -83,7 +83,7 @@ type Msg struct {
 	// pinned_item
 	ItemType string `json:"item_type,omitempty"`
 
-	// https://api.slack.com/rtm
+	// https://api.uim.com/rtm
 	ReplyTo int    `json:"reply_to,omitempty"`
 	Team    string `json:"team,omitempty"`
 

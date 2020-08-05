@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"context"
@@ -13,7 +13,7 @@ const (
 
 type TeamResponse struct {
 	Team TeamInfo `json:"team"`
-	SlackResponse
+	UimResponse
 }
 
 type TeamInfo struct {
@@ -27,7 +27,7 @@ type TeamInfo struct {
 type LoginResponse struct {
 	Logins []Login `json:"logins"`
 	Paging `json:"paging"`
-	SlackResponse
+	UimResponse
 }
 
 type Login struct {
@@ -45,7 +45,7 @@ type Login struct {
 
 type BillableInfoResponse struct {
 	BillableInfo map[string]BillingActive `json:"billable_info"`
-	SlackResponse
+	UimResponse
 }
 
 type BillingActive struct {

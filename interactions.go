@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"bytes"
@@ -30,7 +30,7 @@ const (
 	InteractionTypeShortcut           = InteractionType("shortcut")
 )
 
-// InteractionCallback is sent from slack when a user interactions with a button or dialog.
+// InteractionCallback is sent from uim when a user interactions with a button or dialog.
 type InteractionCallback struct {
 	Type            InteractionType `json:"type"`
 	Token           string          `json:"token"`
@@ -69,7 +69,7 @@ type Container struct {
 }
 
 // ActionCallback is a convenience struct defined to allow dynamic unmarshalling of
-// the "actions" value in Slack's JSON response, which varies depending on block type
+// the "actions" value in UIM's JSON response, which varies depending on block type
 type ActionCallbacks struct {
 	AttachmentActions []*AttachmentAction
 	BlockActions      []*BlockAction

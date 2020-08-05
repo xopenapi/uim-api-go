@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"encoding/json"
@@ -210,11 +210,11 @@ func getTestMembers() []string {
 func getUsersInConversation(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		Members          []string         `json:"members"`
 		ResponseMetaData responseMetaData `json:"response_metadata"`
 	}{
-		SlackResponse:    SlackResponse{Ok: true},
+		UimResponse:    UimResponse{Ok: true},
 		Members:          getTestMembers(),
 		ResponseMetaData: responseMetaData{NextCursor: ""},
 	})
@@ -278,10 +278,10 @@ func getTestChannel() *Channel {
 func okChannelJsonHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		Channel *Channel `json:"channel"`
 	}{
-		SlackResponse: SlackResponse{Ok: true},
+		UimResponse: UimResponse{Ok: true},
 		Channel:       getTestChannel(),
 	})
 	rw.Write(response)
@@ -362,11 +362,11 @@ func TestKickUserFromConversation(t *testing.T) {
 func closeConversationHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		NoOp          bool `json:"no_op"`
 		AlreadyClosed bool `json:"already_closed"`
 	}{
-		SlackResponse: SlackResponse{Ok: true}})
+		UimResponse: UimResponse{Ok: true}})
 	rw.Write(response)
 }
 
@@ -414,10 +414,10 @@ func TestGetConversationInfo(t *testing.T) {
 func leaveConversationHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		NotInChannel bool `json:"not_in_channel"`
 	}{
-		SlackResponse: SlackResponse{Ok: true}})
+		UimResponse: UimResponse{Ok: true}})
 	rw.Write(response)
 }
 
@@ -435,14 +435,14 @@ func TestLeaveConversation(t *testing.T) {
 func getConversationRepliesHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		HasMore          bool `json:"has_more"`
 		ResponseMetaData struct {
 			NextCursor string `json:"next_cursor"`
 		} `json:"response_metadata"`
 		Messages []Message `json:"messages"`
 	}{
-		SlackResponse: SlackResponse{Ok: true},
+		UimResponse: UimResponse{Ok: true},
 		Messages:      []Message{}})
 	rw.Write(response)
 }
@@ -465,13 +465,13 @@ func TestGetConversationReplies(t *testing.T) {
 func getConversationsHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		ResponseMetaData struct {
 			NextCursor string `json:"next_cursor"`
 		} `json:"response_metadata"`
 		Channels []Channel `json:"channels"`
 	}{
-		SlackResponse: SlackResponse{Ok: true},
+		UimResponse: UimResponse{Ok: true},
 		Channels:      []Channel{}})
 	rw.Write(response)
 }
@@ -491,12 +491,12 @@ func TestGetConversations(t *testing.T) {
 func openConversationHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(struct {
-		SlackResponse
+		UimResponse
 		NoOp        bool     `json:"no_op"`
 		AlreadyOpen bool     `json:"already_open"`
 		Channel     *Channel `json:"channel"`
 	}{
-		SlackResponse: SlackResponse{Ok: true}})
+		UimResponse: UimResponse{Ok: true}})
 	rw.Write(response)
 }
 
@@ -520,9 +520,9 @@ func joinConversationHandler(rw http.ResponseWriter, r *http.Request) {
 		ResponseMetaData *struct {
 			Warnings []string `json:"warnings"`
 		} `json:"response_metadata"`
-		SlackResponse
+		UimResponse
 	}{
-		SlackResponse: SlackResponse{Ok: true}})
+		UimResponse: UimResponse{Ok: true}})
 	rw.Write(response)
 }
 
@@ -540,7 +540,7 @@ func TestJoinConversation(t *testing.T) {
 func getConversationHistoryHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(GetConversationHistoryResponse{
-		SlackResponse: SlackResponse{Ok: true}})
+		UimResponse: UimResponse{Ok: true}})
 	rw.Write(response)
 }
 

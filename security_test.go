@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"io"
@@ -17,10 +17,10 @@ const (
 func newHeader(valid bool) http.Header {
 	h := http.Header{}
 	if valid {
-		h.Set("X-Slack-Signature", "v0=adada4ed31709aef585c2580ca3267678c6a8eaeb7e0c1aca3ee57b656886b2c")
-		h.Set("X-Slack-Request-Timestamp", "1531431954")
+		h.Set("X-UIM-Signature", "v0=adada4ed31709aef585c2580ca3267678c6a8eaeb7e0c1aca3ee57b656886b2c")
+		h.Set("X-UIM-Request-Timestamp", "1531431954")
 	} else {
-		h.Set("X-Slack-Signature", "")
+		h.Set("X-UIM-Signature", "")
 	}
 	return h
 }

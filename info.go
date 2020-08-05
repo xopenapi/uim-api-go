@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ import (
 )
 
 type UserPrefsCarrier struct {
-	SlackResponse
+	UimResponse
 	UserPrefs *UserPrefs `json:"prefs"`
 }
 
@@ -82,7 +82,7 @@ type UserPrefs struct {
 	SsEmojis                            bool   `json:"ss_emojis,omitempty"`
 	SeenOnboardingStart                 bool   `json:"seen_onboarding_start,omitempty"`
 	OnboardingCancelled                 bool   `json:"onboarding_cancelled,omitempty"`
-	SeenOnboardingSlackbotConversation  bool   `json:"seen_onboarding_slackbot_conversation,omitempty"`
+	SeenOnboardingUimbotConversation  bool   `json:"seen_onboarding_uimbot_conversation,omitempty"`
 	SeenOnboardingChannels              bool   `json:"seen_onboarding_channels,omitempty"`
 	SeenOnboardingDirectMessages        bool   `json:"seen_onboarding_direct_messages,omitempty"`
 	SeenOnboardingInvites               bool   `json:"seen_onboarding_invites,omitempty"`
@@ -91,7 +91,7 @@ type UserPrefs struct {
 	SeenOnboardingStarredItems          bool   `json:"seen_onboarding_starred_items,omitempty"`
 	SeenOnboardingPrivateGroups         bool   `json:"seen_onboarding_private_groups,omitempty"`
 	SeenOnboardingBanner                bool   `json:"seen_onboarding_banner,omitempty"`
-	OnboardingSlackbotConversationStep  int    `json:"onboarding_slackbot_conversation_step,omitempty"`
+	OnboardingUimbotConversationStep  int    `json:"onboarding_uimbot_conversation_step,omitempty"`
 	SetTzAutomatically                  bool   `json:"set_tz_automatically,omitempty"`
 	SuppressLinkWarning                 bool   `json:"suppress_link_warning,omitempty"`
 	DndEnabled                          bool   `json:"dnd_enabled,omitempty"`
@@ -187,7 +187,7 @@ type UserPrefs struct {
 	SeenCustomStatusCallout                 bool   `json:"seen_custom_status_callout,omitempty"`
 	SeenCustomStatusExpirationBadge         bool   `json:"seen_custom_status_expiration_badge,omitempty"`
 	UsedCustomStatusKbShortcut              bool   `json:"used_custom_status_kb_shortcut,omitempty"`
-	SeenGuestAdminSlackbotAnnouncement      bool   `json:"seen_guest_admin_slackbot_announcement,omitempty"`
+	SeenGuestAdminUimbotAnnouncement      bool   `json:"seen_guest_admin_uimbot_announcement,omitempty"`
 	SeenThreadsNotificationBanner           bool   `json:"seen_threads_notification_banner,omitempty"`
 	SeenNameTaggingCoachmark                bool   `json:"seen_name_tagging_coachmark,omitempty"`
 	AllUnreadsSortOrder                     string `json:"all_unreads_sort_order,omitempty"`
@@ -214,7 +214,7 @@ type UserPrefs struct {
 	InInteractiveMasMigrationFlow           bool   `json:"in_interactive_mas_migration_flow,omitempty"`
 	SunsetInteractiveMessageViews           int    `json:"sunset_interactive_message_views,omitempty"`
 	ShdepPromoCodeSubmitted                 bool   `json:"shdep_promo_code_submitted,omitempty"`
-	SeenShdepSlackbotMessage                bool   `json:"seen_shdep_slackbot_message,omitempty"`
+	SeenShdepUimbotMessage                bool   `json:"seen_shdep_uimbot_message,omitempty"`
 	SeenCallsInteractiveCoachmark           bool   `json:"seen_calls_interactive_coachmark,omitempty"`
 	AllowCmdTabIss                          bool   `json:"allow_cmd_tab_iss,omitempty"`
 	SeenWorkflowBuilderDeluxeToast          bool   `json:"seen_workflow_builder_deluxe_toast,omitempty"`
@@ -247,7 +247,7 @@ type UserPrefs struct {
 	LessonsEnabled                                 bool   `json:"lessons_enabled,omitempty"`
 	TractorEnabled                                 bool   `json:"tractor_enabled,omitempty"`
 	TractorExperimentGroup                         string `json:"tractor_experiment_group,omitempty"`
-	OpenedSlackbotDm                               bool   `json:"opened_slackbot_dm,omitempty"`
+	OpenedUimbotDm                               bool   `json:"opened_uimbot_dm,omitempty"`
 	NewxpSuggestedChannels                         string `json:"newxp_suggested_channels,omitempty"`
 	OnboardingComplete                             bool   `json:"onboarding_complete,omitempty"`
 	WelcomePlaceState                              string `json:"welcome_place_state,omitempty"`
@@ -439,7 +439,7 @@ type Info struct {
 
 type infoResponseFull struct {
 	Info
-	SlackResponse
+	UimResponse
 }
 
 // GetBotByID is deprecated and returns nil

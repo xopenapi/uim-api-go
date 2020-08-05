@@ -1,4 +1,4 @@
-package slack
+package uim
 
 import "encoding/json"
 
@@ -46,7 +46,7 @@ type AttachmentActionOptionGroup struct {
 	Options []AttachmentActionOption `json:"options"` // Required.
 }
 
-// AttachmentActionCallback is sent from Slack when a user clicks a button in an interactive message (aka AttachmentAction)
+// AttachmentActionCallback is sent from UIM when a user clicks a button in an interactive message (aka AttachmentAction)
 // DEPRECATED: use InteractionCallback
 type AttachmentActionCallback InteractionCallback
 

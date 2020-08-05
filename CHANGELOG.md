@@ -4,12 +4,12 @@ thanks to everyone who has contributed since January!
 
 
 #### Breaking Changes:
-- Info struct has had fields removed related to deprecated functionality by slack.
+- Info struct has had fields removed related to deprecated functionality by uim.
 - minor adjustments to some structs.
-- some internal default values have changed, usually to be more inline with slack defaults or to correct inability to set a particular value. (Message Parse for example.)
+- some internal default values have changed, usually to be more inline with uim defaults or to correct inability to set a particular value. (Message Parse for example.)
 
 ##### Highlights:
-- new slacktest package easy mocking for slack client. use, enjoy, please submit PRs for improvements and default behaviours! shamelessly taken from the [slack-test repo](https://github.com/lusis/slack-test) thank you lusis for letting us use it and bring it into the slack repo.
+- new uimtest package easy mocking for uim client. use, enjoy, please submit PRs for improvements and default behaviours! shamelessly taken from the [uim-test repo](https://github.com/lusis/uim-test) thank you lusis for letting us use it and bring it into the uim repo.
 - blocks, blocks, blocks.
 - RTM ManagedConnection has undergone a significant cleanup.
 in particular handles backoffs gracefully, removed many deadlocks,
@@ -17,7 +17,7 @@ and Disconnect is now much more responsive.
 
 ### v0.5.0 - January 20, 2019
 full differences can be viewed using `git log --oneline --decorate --color v0.4.0..v0.5.0`
-- Breaking changes: various old struct fields have been removed or updated to match slack's api.
+- Breaking changes: various old struct fields have been removed or updated to match uim's api.
 - deadlock fix in RTM disconnect.
 
 ### v0.4.0 - October 06, 2018
@@ -34,7 +34,7 @@ this means it may break without warning in the future.
 
 ### v0.3.0 - July 30, 2018
 full differences can be viewed using `git log --oneline --decorate --color v0.2.0..v0.3.0`
-- slack events initial support added. (still considered experimental and undergoing changes, stability not promised)
+- uim events initial support added. (still considered experimental and undergoing changes, stability not promised)
 - vendored depedencies using dep, ensure using up to date tooling before filing issues.
 - RTM has improved its ability to identify dead connections and reconnect automatically (worth calling out in case it has unintended side effects).
 - bug fixes (various timestamp handling, error handling, RTM locking, etc).
@@ -43,7 +43,7 @@ full differences can be viewed using `git log --oneline --decorate --color v0.2.
 
 Release adds a bunch of functionality and improvements, mainly to give people a recent version to vendor against.
 
-Please check [0.2.0](https://github.com/nlopes/slack/releases/tag/v0.2.0)
+Please check [0.2.0](https://github.com/nlopes/uim/releases/tag/v0.2.0)
 
 ### v0.1.0 - May 28, 2017
 
@@ -51,9 +51,9 @@ This is released before adding context support.
 As the used context package is the one from Go 1.7 this will be the last
 compatible with Go < 1.7.
 
-Please check [0.1.0](https://github.com/nlopes/slack/releases/tag/v0.1.0)
+Please check [0.1.0](https://github.com/nlopes/uim/releases/tag/v0.1.0)
 
 ### v0.0.1 - Jul 26, 2015
 
 If you just updated from master and it broke your implementation, please
-check [0.0.1](https://github.com/nlopes/slack/releases/tag/v0.0.1)
+check [0.0.1](https://github.com/nlopes/uim/releases/tag/v0.0.1)
